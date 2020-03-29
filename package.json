@@ -1,0 +1,20 @@
+{
+  "name": "riposte",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heanzyzabala/riposte.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heanzyzabala/riposte/issues"
+  },
+  "homepage": "https://github.com/heanzyzabala/riposte#readme",
+  "dependencies": {
+    "discord.js": "^12.1.1"
+  }
+}
