@@ -10,9 +10,9 @@ bot.on('message', msg => {
   if(msg.member.id == '693108033601011762') {
     return;
   }
-  const spiel = spiels.find(o => o.key === msg.content);
+  const spiel = spiels.find(o => o.key.toLowerCase() === msg.content.toLowerCase());
   if(spiel) {
-    console.log(`${msg.content}`);
+    console.log(`[${msg.member.displayName}]:  ${msg.content}`);
     msg.reply(spiel.value);
   }
 });
