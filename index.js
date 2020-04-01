@@ -12,7 +12,8 @@ bot.on('message', msg => {
   }
   const spiel = spiels.find(o => o.key.toLowerCase() === msg.content.toLowerCase());
   if(spiel) {
-    console.log(`[${msg.member.displayName}]:  ${msg.content}`);
+    console.log(msg);
+    console.log(`${msg.createdAt} [${msg.member.displayName}]:  ${msg.content}`);
     msg.reply(spiel.value);
   }
 });
