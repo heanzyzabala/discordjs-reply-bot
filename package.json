@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/heanzyzabala/riposte#readme",
   "dependencies": {
-    "discord.js": "^12.1.1"
+    "discord.js": "^12.1.1",
+    "redis": "^3.0.2"
   }
 }
