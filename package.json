@@ -16,6 +16,7 @@
   "homepage": "https://github.com/heanzyzabala/riposte#readme",
   "dependencies": {
     "discord.js": "^12.1.1",
+    "dotenv": "^8.2.0",
     "mongodb": "^3.5.5"
   }
 }
