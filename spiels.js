@@ -1,28 +1,25 @@
 // TOOD: Optimize mongo queries
+const Mongo = require('./mongo');
 const Spiels = function() {
-  const MongoClient = require('mongodb').MongoClient;
-  const mongodbUrl = 'mongodb://localhost:27017/';
   
   this.find = function(guildId, message, cb) {
-    MongoClient.connect(mongodbUrl, { useUnifiedTopology: true }, async (err, client) => {
-      if(err) throw err;
-      const db = client.db('riposte');
+    Mongo.connect(async function(db, connection) {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if(spiel) {
         const mappings = spiel.mappings;
         const reply = mappings.find(m => { return m.key === message; });
         if(reply) {
           cb(reply.value);
-        } e
+        } else {
+          cb();
+        }
       }
-      client.close();
+      connection.close();
     });
   }
 
   this.save = function(guildId, mapping, cb) {
-    MongoClient.connect(mongodbUrl, { useUnifiedTopology: true }, async (err, client) => {
-      if(err) throw err;
-      const db = client.db('riposte');
+    Mongo.connect(async function(db, connection) {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if(spiel) {
         const mappings = spiel.mappings;
@@ -37,7 +34,7 @@ const Spiels = function() {
       } else {
         cb(await db.collection('spiels').insertOne({ guild_id: guildId, mappings: [ mapping ] }));
       }
-      client.close();
+      connection.close();
     });
   }
 }
