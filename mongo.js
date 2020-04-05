@@ -1,4 +1,3 @@
-// TOOD: Optimize mongo queries
 const Mongo = function() {
   const MongoClient = require('mongodb').MongoClient;
   const mongoUrl = process.env.MONGO_URL;
