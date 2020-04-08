@@ -50,12 +50,12 @@ bot.on('message', msg => {
     console.log(`DATE: ${msg.createdAt}`);
     console.log(`GUILD: ${guildId}`);
     console.log(`USER: ${msg.member.user.id}/${msg.member.user.username}#${msg.member.user.discriminator}/${msg.member.displayName}`);
-    console.log(`KEY: ${key}`);
     if (splt_message.length != 2) {
       msg.reply('Invalid arguments, should be: !delete <key>');
       console.log(`STATUS: FAILED`);
     } else {
       const key = splt_message[1];
+      console.log(`KEY: ${key}`);
       Spiels.delete(guildId, key, function (ok) {
         if(ok) {
           msg.reply(`Deleted key: ${key}`);

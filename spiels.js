@@ -54,7 +54,7 @@ const Spiels = function() {
     });
   }
 
-  this.delete = function(guidId, key, cb) {
+  this.delete = function(guildId, key, cb) {
     Mongo.connect(async function(db, connection) {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if(spiel) {
