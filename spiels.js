@@ -23,18 +23,36 @@ const Spiels = function() {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if(spiel) {
         const mappings = spiel.mappings;
-        console.log(mappings);
         const index = mappings.findIndex(m => m.key === mapping.key);
         if(index === -1) {
           mappings.push(mapping);
         } else {
           mappings[index] = mapping;
         }
-        cb(await db.collection('spiels').update({ guild_id: guildId, mappings: [ mappings] }));
+        const result = await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings: mappings }});
+        console.log(result);
+        if(result.modifiedCount === 1) {
+          console.log('mapping bitch');
+          console.log(mapping);
+          cb(mapping)
+        } else {
+          cb();
+        }
       } else {
         cb(await db.collection('spiels').insertOne({ guild_id: guildId, mappings: [ mapping ] }));
       }
       connection.close();
+    });
+  }
+
+  this.list = function(guildId, cb) {
+    Mongo.connect(async function(db, connection) {
+      const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
+      if(spiel) {
+        cb(spiel.mappings);
+      } else {
+        cb([]);
+      }
     });
   }
 }
