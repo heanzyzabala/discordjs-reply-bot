@@ -29,11 +29,8 @@ const Spiels = function() {
         } else {
           mappings[index] = mapping;
         }
-        const result = await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings: mappings }});
-        console.log(result);
-        if(result.modifiedCount === 1) {
-          console.log('mapping bitch');
-          console.log(mapping);
+        const res = await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings: mappings }});
+        if(res.result.ok === 1) {
           cb(mapping)
         } else {
           cb();
@@ -53,6 +50,26 @@ const Spiels = function() {
       } else {
         cb([]);
       }
+      connection.close();
+    });
+  }
+
+  this.delete = function(guidId, key, cb) {
+    Mongo.connect(async function(db, connection) {
+      const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
+      if(spiel) {
+        const mappings = spiel.mappings;
+        const index = mappings.findIndex(m => m.key === key);
+        if(index === -1) {
+          cb();
+        } else {
+          mappings.splice(index, 1);
+          cb({});
+        }
+      } else {
+        cb([]);
+      }
+      connection.close();
     });
   }
 }
