@@ -64,10 +64,15 @@ const Spiels = function() {
           cb();
         } else {
           mappings.splice(index, 1);
-          cb({});
+          const res = await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings: mappings }});
+          if(res.result.ok === 1) {
+            cb('ok')
+          } else {
+            cb();
+          }
         }
       } else {
-        cb([]);
+        cb();
       }
       connection.close();
     });
