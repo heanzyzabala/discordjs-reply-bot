@@ -1,13 +1,19 @@
-const Mongo = function() {
-  const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
+const log4js = require('log4js');
+
+const logger = log4js.getLogger();
+
+function Mongo() {
   const mongoUrl = process.env.MONGO_URL;
   const mongoDbName = process.env.MONGO_RIPOSTE_DB;
-
-  this.connect = function(cb) {
-    MongoClient.connect(mongoUrl, { useUnifiedTopology: true }, (err, client) => {
-      if(err) throw err;
-      cb(client.db(mongoDbName), client);
-    });
+  this.connect = async () => {
+    try {
+      const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
+      return { db: client.db(mongoDbName), client };
+    } catch (err) {
+      logger.fatal(err);
+      return { error: true };
+    }
   };
 }
 module.exports = new Mongo();
