@@ -42,8 +42,10 @@ bot.on('message', msg => {
     console.log(`DATE: ${msg.createdAt}`);
     console.log(`GUILD: ${guildId}`);
     console.log(`USER: ${msg.member.user.id}/${msg.member.user.username}#${msg.member.user.discriminator}/${msg.member.displayName}`);
-    Spiels.list(guildId, function (mapping) {
-      msg.reply(JSON.stringify(mapping));
+    Spiels.list(guildId, function (mappings) {
+      const formattedMappings = mappings.map(m => `${m.key} -> ${m.value}`)
+        .reduce((prev, next) => `${prev}\n${next}`);
+      msg.reply(`\n${formattedMappings}`);
     });
   } else if (splt_message[0] === '!delete') {
     console.log(`TAG: DELETE`);

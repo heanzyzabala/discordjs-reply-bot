@@ -31,7 +31,7 @@ const Spiels = function() {
         }
         const res = await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings: mappings }});
         if(res.result.ok === 1) {
-          cb(mapping)
+          cb({ key: mapping.key, value: mapping.value });
         } else {
           cb();
         }
