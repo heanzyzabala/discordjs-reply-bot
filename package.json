@@ -2,7 +2,7 @@
   "name": "riposte",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bot.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heanzyzabala/riposte.git"

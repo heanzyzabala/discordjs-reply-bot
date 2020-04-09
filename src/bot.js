@@ -5,14 +5,14 @@ const Spiels = require('./spiels');
 const token = process.env.DISCORD_BOT_RIPOSTE_TOKEN;
 const bot = new Discord.Client();
 
-bot.on('ready', () => { 
-  console.log(`UP: ${bot.readyAt}`);
-});
+bot.on('ready', () => { console.log(`UP: ${bot.readyAt}`); });
 
 bot.on('message', msg => {
   if (msg.member.id == bot.user.id) {
     return;
   }
+  
+  console.log(msg.embeds);
   const guildId = msg.member.guild.id;
   const message = msg.content;
   const splt_message = message.split(' ');
