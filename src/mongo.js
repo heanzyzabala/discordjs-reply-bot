@@ -9,10 +9,10 @@ function Mongo() {
   this.connect = async () => {
     try {
       const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
-      return { db: client.db(mongoDbName), client };
+      return { db: client.db(mongoDbName), client, error: false };
     } catch (err) {
       logger.fatal(err);
-      return { error: true };
+      return { db: null, client: null, error: true };
     }
   };
 }
