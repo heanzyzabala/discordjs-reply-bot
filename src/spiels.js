@@ -2,21 +2,29 @@ const Mongo = require('./mongo');
 const Logger = require('./logger');
 
 function Spiels() {
+  const matchesByCriteria = (mappingKey, key, criteria) => {
+    const { format, matching } = criteria;
+    let key1 = mappingKey;
+    let key2 = key;
+    if (format === 'ignoreCase') {
+      key1 = key1.toLowerCase();
+      key2 = key2.toLowerCase();
+    }
+    if (matching === 'includes') {
+      return key2.includes(key1);
+    }
+    return key1 === key2;
+  };
+
   this.find = async (guildId, key) => {
-    let db;
-    let client;
-    let error;
+    const { db, client, error } = await Mongo.connect();
+    if (error) {
+      return { error: true };
+    }
     try {
-      const mongo = await Mongo.connect();
-      db = mongo.db;
-      client = mongo.client;
-      error = mongo.error;
-      if (error) {
-        return { value: null, error: true };
-      }
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
-        const reply = spiel.mappings.find((m) => m.key === key);
+        const reply = spiel.mappings.find((m) => matchesByCriteria(m.key, key, m.criteria));
         if (reply) {
           return { value: reply.value, error: false };
         }
@@ -103,5 +111,4 @@ function Spiels() {
     }
   };
 }
-
 module.exports = new Spiels();
