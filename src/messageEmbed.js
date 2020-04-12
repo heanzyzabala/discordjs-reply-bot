@@ -8,9 +8,13 @@ function MessageEmbed() {
     .setAuthor(user)
     .setTitle(title)
     .setDescription(message)
-    .addField('key', key, true)
-    .addField('value', value, true)
-    .addField('format', format)
-    .addField('matching', matching);
+    .addFields(
+      { name: 'key', value: key, inline: true },
+      { name: 'value', value, inline: true },
+    )
+    .addFields(
+      { name: 'format', value: format },
+      { name: 'matching', value: matching },
+    );
 }
 module.exports = new MessageEmbed();
