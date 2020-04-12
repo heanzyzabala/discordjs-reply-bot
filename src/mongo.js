@@ -1,7 +1,6 @@
 const { MongoClient } = require('mongodb');
-const log4js = require('log4js');
 
-const logger = log4js.getLogger();
+const Logger = require('./logger');
 
 function Mongo() {
   const mongoUrl = process.env.MONGO_URL;
@@ -11,7 +10,7 @@ function Mongo() {
       const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
       return { db: client.db(mongoDbName), client, error: false };
     } catch (err) {
-      logger.fatal(err);
+      Logger.error(err);
       return { db: null, client: null, error: true };
     }
   };

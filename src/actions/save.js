@@ -6,7 +6,7 @@ function Save() {
     if (error) {
       return { error: true };
     }
-    return { success: true, error: false };
+    return { error: false };
   };
 }
 module.exports = new Save();

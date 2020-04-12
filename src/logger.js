@@ -13,4 +13,4 @@ function Logger() {
     logger.error(msg);
   };
 }
-module.export = new Logger();
+module.exports = new Logger();
