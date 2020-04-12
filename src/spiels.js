@@ -2,7 +2,6 @@ const Mongo = require('./mongo');
 const Logger = require('./logger');
 
 function Spiels() {
-
   this.find = async (guildId, key) => {
     let db;
     let client;

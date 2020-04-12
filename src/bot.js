@@ -49,7 +49,6 @@ bot.on('message', async (msg) => {
       msg.reply('Invalid command, it should be: --remove {key}');
       return;
     }
-    
     const { removed, error } = await Remove.execute(guildId, key);
     if (error) {
       msg.reply('Something went wrong :[');
