@@ -76,7 +76,7 @@ function Spiels() {
       if (spiel) {
         return { spiel, error: false };
       }
-      return { spiel: null, error: false };
+      return { spiel: [], error: false };
     } catch (err) {
       Logger.error(err);
       return { error: true };

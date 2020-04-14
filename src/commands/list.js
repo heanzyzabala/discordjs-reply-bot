@@ -1,15 +1,15 @@
 const Spiels = require('../spiels');
 
-function List() {
-  this.execute = async (guildId) => {
-    const { spiel, error } = await Spiels.list(guildId);
+module.exports = {
+  name: 'list',
+  aliases: ['l'],
+  usage: '',
+  execute: async (message) => {
+    const { spiel, error } = await Spiels.list(message.member.guild.id);
     if (error) {
-      return { mappings: null, error: true };
+      message.reply('Something went wrong.');
+      return;
     }
-    if (spiel) {
-      return { mappings: spiel.mappings, error: false };
-    }
-    return { mappings: [], error: false };
-  };
-}
-module.exports = new List();
+    message.reply(spiel);
+  },
+};
