@@ -4,10 +4,12 @@ const token = process.env.DISCORD_BOT_RIPOSTE_TOKEN;
 
 const Discord = require('discord.js');
 
-const Save = require('./actions/save');
-const Find = require('./actions/find');
-const List = require('./actions/list');
-const Remove = require('./actions/remove');
+const commands = require('./commands');
+
+const Save = require('./commands/save');
+const Find = require('./commands/find');
+const List = require('./commands/list');
+const Remove = require('./commands/remove');
 const MessageEmbed = require('./messageEmbed');
 const Logger = require('./logger');
 
@@ -74,7 +76,13 @@ bot.on('message', async (msg) => {
     if (error) {
       msg.reply('Something went wrong :[');
     } else if (removed) {
-      msg.reply('Removed :]');
+      const messageDetails = {
+        user: msg.member.user.username,
+        title: 'Removed',
+        message: 'You\'ve remove key',
+        key,
+      };
+      msg.channel.send(MessageEmbed.removed(messageDetails));
     } else {
       msg.reply('Unable to remove :o');
     }
@@ -83,7 +91,13 @@ bot.on('message', async (msg) => {
     if (error) {
       msg.reply('Something went wrong :[');
     }
-    msg.reply(JSON.stringify(mappings));
+    const messageDetails = {
+      user: msg.member.user.username,
+      title: 'List',
+      message: 'Available mappings:',
+      mappings,
+    };
+    msg.channel.send(MessageEmbed.list(messageDetails));
   } else {
     const { reply, error } = await Find.execute(guildId, msg.content);
     if (error) {
