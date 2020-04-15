@@ -3,8 +3,8 @@ const Spiels = require('../spiels');
 module.exports = {
   name: 'add',
   aliases: ['a'],
-  usage: '$"[key]" "[value]" [--include?] [--ignoreCase?]',
-  execute: async (message, args) => {
+  usage: '"<key>" "<value>" --include? --ignoreCase?',
+  async execute(message, args) {
     const pattern = '"(.*)" "(.*)"\\s?(--includes)?\\s?(--ignoreCase)?';
     const matches = args.match(pattern);
     if (!matches) {

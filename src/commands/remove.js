@@ -4,7 +4,7 @@ module.exports = {
   name: 'remove',
   aliases: ['r'],
   usage: '[key]',
-  execute: async (message, args) => {
+  async execute(message, args) {
     const { removed, error } = await Spiels.remove(message.member.guild.id, args);
     if (error) {
       message.reply('Something went wrong.');
