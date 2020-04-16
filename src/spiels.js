@@ -74,9 +74,9 @@ function Spiels() {
     try {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
-        return { spiel, error: false };
+        return { mappings: spiel.mappings, error: false };
       }
-      return { spiel: [], error: false };
+      return { mappings: [], error: false };
     } catch (err) {
       Logger.error(err);
       return { error: true };

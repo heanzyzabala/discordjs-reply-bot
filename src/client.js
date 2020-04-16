@@ -1,6 +1,10 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 require('dotenv').config();
 
 const token = process.env.DISCORD_BOT_RIPOSTE_TOKEN;
+const prefix = process.env.PREFIX;
+
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
@@ -14,7 +18,6 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync(path.resolve(__dirname, './commands'))
   .filter((file) => file.endsWith('.js'));
 Object.values(commandFiles).forEach((file) => {
-  // eslint-disable-next-line import/no-dynamic-require
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 });
@@ -25,7 +28,6 @@ client.on('message', async (message) => {
   if (message.member.id === client.user.id) {
     return;
   }
-  const prefix = '--';
   const commandName = message.content.slice(prefix.length).split(' ', 1)[0];
   const command = client.commands.get(commandName)
   || client.commands.find((cmd) => cmd.aliases.includes(commandName));
