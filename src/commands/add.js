@@ -5,7 +5,7 @@ module.exports = {
   aliases: ['a'],
   usage: '"<key>" "<value>" --include? --ignoreCase?',
   async execute(message, args) {
-    const pattern = '"(.*)" "(.*)"\\s?(--includes)?\\s?(--ignoreCase)?';
+    const pattern = '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$';
     const matches = args.match(pattern);
     if (!matches) {
       message.reply(`Usage: ${this.usage}`);
