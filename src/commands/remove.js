@@ -3,7 +3,7 @@ const Spiels = require('../spiels');
 module.exports = {
   name: 'remove',
   aliases: ['r'],
-  usage: '[key]',
+  usage: '<key>',
   async execute(message, args) {
     const { removed, error } = await Spiels.remove(message.member.guild.id, args);
     if (error) {
