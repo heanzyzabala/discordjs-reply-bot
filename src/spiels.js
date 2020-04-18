@@ -84,7 +84,7 @@ function Spiels() {
       client.close();
     }
   };
-
+  
   this.remove = async (guildId, key) => {
     const { db, client, error } = await Mongo.connect();
     if (error) {

@@ -32,10 +32,8 @@ client.on('message', async (message) => {
   if (message.author.bot) {
     return;
   }
-
   const commandName = message.content.slice(prefix.length).split(' ', 1)[0];
   const command = getCommand(commandName);
-
   if (command) {
     const args = message.content.slice(
       commandName.length + prefix.length + 1, message.content.length,

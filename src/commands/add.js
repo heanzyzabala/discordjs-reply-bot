@@ -1,14 +1,16 @@
 const Spiels = require('../spiels');
+const Views = require('../views');
+const Logger = require('../logger');
 
 module.exports = {
   name: 'add',
   aliases: ['a'],
-  usage: '"<key>" "<value>" --include? --ignoreCase?',
+  usage: '"<key>" "<value>" --includes? --ignoreCase?',
   async execute(message, args) {
     const pattern = '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$';
     const matches = args.match(pattern);
     if (!matches) {
-      message.reply(`Usage: ${this.usage}`);
+      message.channel.send(Views.usage(message.member.user.username, this.usage));
       return;
     }
     const criteria = {
@@ -29,9 +31,10 @@ module.exports = {
 
     const { error } = await Spiels.save(message.member.guild.id, mapping);
     if (error) {
-      message.reply('Error');
+      Logger.error(error);
+      message.channel.send(Views.error(message.member.user.username));
       return;
     }
-    message.reply('Ok');
+    message.channel.send(Views.ok(message.member.user.username, 'You\'ve added a new mapping'));
   },
 };
