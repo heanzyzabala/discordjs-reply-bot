@@ -11,7 +11,7 @@ module.exports = {
       return;
     }
     if (value) {
-      message.channel.send(`${message.author}: ${value}`);
+      message.channel.send(`${message.author}, ${value}`);
     }
   },
 };

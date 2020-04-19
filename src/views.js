@@ -1,16 +1,27 @@
 const Discord = require('discord.js');
 
 module.exports = {
-  test() {
-    return new Discord.MessageEmbed()
+  list(mappings) {
+    const message = new Discord.MessageEmbed()
       .setColor('#cddc39')
-      .setAuthor('Twinstar')
-      .setTitle('Invalid command')
-      .addField('`dfdkjfdkfjdkfjd`', `
+      .setDescription('Current Mappings');
+    this.generateRows(mappings, (row) => {
+      if (!row) {
+        message.setDescription('There are no mappings added yet.');
+        return;
+      }
+      const { index } = row;
+      const { key, value, criteria } = row.mapping;
+      message.addField(`\`[${index}]\``, `
 \`\`\`
-Hellosdflsjfldksjfskdfjlsdkjflskdjflskdfjsdlsdfjslkdfjsdjd; lkfjlsdkjsldkjflsdkfjalsdjlasdjf;alskdjfalsjflaksjdhlaksjdhfal;sjdhflka
+key: ${key}
+value: ${value}
+format: ${criteria.format}
+matching: ${criteria.matching}
 \`\`\`
-`);
+      `);
+    });
+    return message;
   },
   usage(user, message) {
     return new Discord.MessageEmbed()
@@ -39,7 +50,20 @@ Hellosdflsjfldksjfskdfjlsdkjflskdjflskdfjsdlsdfjslkdfjsdjd; lkfjlsdkjsldkjflsdkf
       .setTitle(message);
   },
   list(mappings) {
-    const rows = this.generateRows(mappings);
+    let rows = '';
+    this.generateRows(mappings, (row) => {
+      if (!row) {
+        rows += 'There are no mappings added yet.';
+        return;
+      }
+      const { index } = row;
+      const { key, value, criteria } = row.mapping;
+      rows += `[${index}]:\n`;
+      rows += `key: ${key}\n`;
+      rows += `value: ${value}\n`;
+      rows += `format: ${criteria.format}\n`;
+      rows += `matching: ${criteria.matching}\n`;
+    });
     return `
 \`\`\`
 Current mappings:
@@ -48,17 +72,14 @@ ${rows}
 \`\`\`
 `;
   },
-  generateRows(mappings) {
+  generateRows(mappings, cb) {
     const { length } = mappings;
-    let rows = '';
     if (length === 0) {
-      rows = 'There are no mappings added yet.';
+      cb(null);
     } else {
-      for (let i = 0; i < mappings.length; i += 1) {
-        const { key, value, criteria } = mappings[i];
-        rows += `[${i}]: ${key} -> ${value} [${criteria.format}, ${criteria.matching}]\n`;
+      for (let i = 0; i < length; i += 1) {
+        cb({ index: i, mapping: mappings[i] });
       }
     }
-    return rows;
   },
 };

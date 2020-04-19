@@ -15,7 +15,6 @@ module.exports = {
     }
     const { removed, error } = await Spiels.remove(message.member.guild.id, matches[1]);
     if (error) {
-      Logger.error(error);
       message.channel.send(Views.error(message.member.user.username));
       return;
     }

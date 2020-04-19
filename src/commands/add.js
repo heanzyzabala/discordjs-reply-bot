@@ -31,7 +31,6 @@ module.exports = {
 
     const { error } = await Spiels.save(message.member.guild.id, mapping);
     if (error) {
-      Logger.error(error);
       message.channel.send(Views.error(message.member.user.username));
       return;
     }

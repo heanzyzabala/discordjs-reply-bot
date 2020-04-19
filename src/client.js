@@ -12,6 +12,8 @@ const Discord = require('discord.js');
 const Find = require('./find');
 const Logger = require('./logger');
 
+const Views = require('./views');
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();

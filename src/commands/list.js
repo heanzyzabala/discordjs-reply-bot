@@ -13,5 +13,6 @@ module.exports = {
       return;
     }
     message.channel.send(Views.list(mappings));
+    message.channel.send(Views.list1(mappings));
   },
 };
