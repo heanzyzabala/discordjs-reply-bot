@@ -18,9 +18,10 @@ function Logger() {
   const logger = log4js.getLogger();
   logger.level = 'all';
 
-  this.initContext = (message) => {
+  this.initContext = (message, command) => {
     const meta = {
       id: uuid(),
+      command,
       user: {
         id: message.member.user.id,
         username: message.member.user.username,
@@ -50,7 +51,7 @@ function Logger() {
         createdTimestamp: message.channel.createdTimestamp,
       },
     };
-    logger.info(meta);
+    logger.info({ ...meta });
     logger.addContext('logId', meta.id);
   };
 

@@ -9,8 +9,8 @@ module.exports = {
       const mongoDbName = process.env.MONGO_RIPOSTE_DB;
       const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
       return { db: client.db(mongoDbName), client, error: false };
-    } catch (err) {
-      Logger.error(err);
+    } catch (error) {
+      Logger.error({ error });
       return { db: null, client: null, error: true };
     }
   },

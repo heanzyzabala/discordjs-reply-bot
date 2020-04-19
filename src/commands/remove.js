@@ -8,6 +8,9 @@ module.exports = {
   usage: '"<key>"|<index>',
   async execute(message, args) {
     const { removed, error, match } = await this.remove(message.member.guild.id, args);
+    Logger.info({
+      src: 'remove.js#execute()', removed, error, match,
+    });
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
       return;

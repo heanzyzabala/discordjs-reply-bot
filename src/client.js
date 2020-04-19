@@ -36,7 +36,7 @@ client.on('message', async (message) => {
     const commandName = message.content.slice(prefix.length).split(' ', 1)[0];
     const command = getCommand(commandName);
     if (command) {
-      Logger.initContext(message);
+      Logger.initContext(message, command.name);
       const args = message.content.slice(
         commandName.length + prefix.length + 1, message.content.length,
       );

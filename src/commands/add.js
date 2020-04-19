@@ -7,7 +7,6 @@ module.exports = {
   aliases: ['a'],
   usage: '"<key>" "<value>" --includes? --ignoreCase?',
   async execute(message, args) {
-    Logger.info('');
     const pattern = '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$';
     const matches = args.match(pattern);
     if (!matches) {
@@ -23,6 +22,9 @@ module.exports = {
       },
     };
     const { error } = await Spiels.save(message.member.guild.id, mapping);
+    Logger.info({
+      src: 'save.js#execute()', error, mapping,
+    });
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
       return;

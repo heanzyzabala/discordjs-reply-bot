@@ -31,7 +31,7 @@ module.exports = {
       }
       return { value: null, error: false };
     } catch (err) {
-      Logger.error(err);
+      Logger.error({ error: err });
       return { value: null, error: true };
     } finally {
       client.close();
@@ -58,7 +58,7 @@ module.exports = {
       }
       return { error: false };
     } catch (err) {
-      Logger.error(err);
+      Logger.error({ error: err });
       return { error: true };
     } finally {
       client.close();
@@ -76,7 +76,7 @@ module.exports = {
       }
       return { mappings: [], error: false };
     } catch (err) {
-      Logger.error(err);
+      Logger.error({ error: err });
       return { error: true };
     } finally {
       client.close();
@@ -101,6 +101,7 @@ module.exports = {
       }
       return { removed: false, error: false };
     } catch (err) {
+      Logger.error({ error: err });
       return { remove: false, error: true };
     } finally {
       client.close();
@@ -125,6 +126,7 @@ module.exports = {
       }
       return { removed: false, error: false };
     } catch (err) {
+      Logger.error({ error: err });
       return { removed: false, error: true };
     } finally {
       client.close();
