@@ -29,13 +29,13 @@ match:  ${criteria.match}
       .setColor('#cddc39')
       .setAuthor(user)
       .setTitle('Invalid command')
-      .addField('Usage', message);
+      .addField('Usage', `\`\`\`${message}\`\`\``);
   },
   error(user) {
     return new Discord.MessageEmbed()
       .setColor('#f44336')
       .setAuthor(user)
-      .setTitle('Oof. Something went wrong')
+      .setTitle('Oof. Something went wrong!')
       .setDescription('Please contact the developer if you keep seeing this message.');
   },
   warning(user, message) {

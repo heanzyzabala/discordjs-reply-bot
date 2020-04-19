@@ -7,6 +7,7 @@ module.exports = {
   aliases: ['a'],
   usage: '"<key>" "<value>" --includes? --ignoreCase?',
   async execute(message, args) {
+    Logger.info('');
     const pattern = '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$';
     const matches = args.match(pattern);
     if (!matches) {

@@ -26,20 +26,23 @@ Object.values(commandFiles).forEach((file) => {
 const getCommand = (commandName) => client.commands.get(commandName)
     || client.commands.find((cmd) => cmd.aliases.includes(commandName));
 
-client.on('ready', () => { Logger.info('UP'); });
+client.on('ready', () => Logger.info('UP'));
 
 client.on('message', async (message) => {
   if (message.author.bot) {
     return;
   }
-  const commandName = message.content.slice(prefix.length).split(' ', 1)[0];
-  const command = getCommand(commandName);
-  if (command) {
-    const args = message.content.slice(
-      commandName.length + prefix.length + 1, message.content.length,
-    );
-    command.execute(message, args);
-    return;
+  if (message.content.slice(0, prefix.length) === prefix) {
+    const commandName = message.content.slice(prefix.length).split(' ', 1)[0];
+    const command = getCommand(commandName);
+    if (command) {
+      Logger.initContext(message);
+      const args = message.content.slice(
+        commandName.length + prefix.length + 1, message.content.length,
+      );
+      command.execute(message, args);
+      return;
+    }
   }
   Find.execute(message);
 });
