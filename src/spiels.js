@@ -2,14 +2,14 @@ const Mongo = require('./mongo');
 const Logger = require('./logger');
 
 const matchesByCriteria = (mappingKey, key, criteria) => {
-  const { format, matching } = criteria;
+  const { format, match } = criteria;
   let key1 = mappingKey;
   let key2 = key;
   if (format === 'ignoreCase') {
     key1 = key1.toLowerCase();
     key2 = key2.toLowerCase();
   }
-  if (matching === 'includes') {
+  if (match === 'includes') {
     return key2.includes(key1);
   }
   return key1 === key2;
@@ -82,7 +82,7 @@ module.exports = {
       client.close();
     }
   },
-  async remove(guildId, key) {
+  async removeByKey(guildId, key) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { error: true };
@@ -99,10 +99,33 @@ module.exports = {
         await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings } });
         return { removed: true, error: false };
       }
-      return { removed: false, error: true };
+      return { removed: false, error: false };
     } catch (err) {
-      Logger.error(err);
+      return { remove: false, error: true };
+    } finally {
+      client.close();
+    }
+  },
+  async removeByIndex(guildId, index) {
+    const { db, client, error } = await Mongo.connect();
+    if (error) {
       return { error: true };
+    }
+    try {
+      const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
+      if (spiel) {
+        const { mappings } = spiel;
+        const mapping = mappings[index];
+        if (!mapping) {
+          return { removed: false, error: false };
+        }
+        mappings.splice(index, 1);
+        await db.collection('spiels').updateOne({ guild_id: guildId }, { $set: { mappings } });
+        return { removed: true, error: false };
+      }
+      return { removed: false, error: false };
+    } catch (err) {
+      return { removed: false, error: true };
     } finally {
       client.close();
     }

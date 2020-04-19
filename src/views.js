@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   list(user, mappings) {
     const message = new Discord.MessageEmbed()
-      .setColor('#cddc39')
+      .setColor('#4caf50')
       .setAuthor(user)
       .setTitle('Current Mappings');
     this.generateRows(mappings, (row) => {
@@ -13,12 +13,12 @@ module.exports = {
       }
       const { index } = row;
       const { key, value, criteria } = row.mapping;
-      message.addField(`\`[${index}]\``, `
+      message.addField(`[${index}]`, `
 \`\`\`
-key: ${key}
-value: ${value}
+key:    ${key}
+value:  ${value}
 format: ${criteria.format}
-matching: ${criteria.matching}
+match:  ${criteria.match}
 \`\`\`
       `);
     });

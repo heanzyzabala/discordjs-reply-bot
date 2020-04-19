@@ -13,22 +13,14 @@ module.exports = {
       message.channel.send(Views.usage(message.member.user.username, this.usage));
       return;
     }
-    const criteria = {
-      format: 'caseSensitive',
-      matching: 'exact',
-    };
-    if (matches[3]) {
-      criteria.matching = 'includes';
-    }
-    if (matches[4]) {
-      criteria.format = 'ignoreCase';
-    }
     const mapping = {
       key: matches[1],
       value: matches[2],
-      criteria,
+      criteria: {
+        format: (matches[4] && matches[4].slice(2)) || 'exact',
+        match: (matches[3] && matches[3].slice(2)) || 'caseSensitive',
+      },
     };
-
     const { error } = await Spiels.save(message.member.guild.id, mapping);
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
