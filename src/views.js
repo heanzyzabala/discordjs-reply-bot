@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 
 module.exports = {
-  list(mappings) {
+  list(user, mappings) {
     const message = new Discord.MessageEmbed()
       .setColor('#cddc39')
-      .setDescription('Current Mappings');
+      .setAuthor(user)
+      .setTitle('Current Mappings');
     this.generateRows(mappings, (row) => {
       if (!row) {
         message.setDescription('There are no mappings added yet.');
@@ -48,29 +49,6 @@ matching: ${criteria.matching}
       .setColor('#4caf50')
       .setAuthor(user)
       .setTitle(message);
-  },
-  list(mappings) {
-    let rows = '';
-    this.generateRows(mappings, (row) => {
-      if (!row) {
-        rows += 'There are no mappings added yet.';
-        return;
-      }
-      const { index } = row;
-      const { key, value, criteria } = row.mapping;
-      rows += `[${index}]:\n`;
-      rows += `key: ${key}\n`;
-      rows += `value: ${value}\n`;
-      rows += `format: ${criteria.format}\n`;
-      rows += `matching: ${criteria.matching}\n`;
-    });
-    return `
-\`\`\`
-Current mappings:
-
-${rows}
-\`\`\`
-`;
   },
   generateRows(mappings, cb) {
     const { length } = mappings;

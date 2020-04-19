@@ -12,7 +12,6 @@ module.exports = {
       message.channel.send(Views.error(message.member.user.username));
       return;
     }
-    message.channel.send(Views.list(mappings));
-    message.channel.send(Views.list1(mappings));
+    message.channel.send(Views.list(message.member.user.username, mappings));
   },
 };

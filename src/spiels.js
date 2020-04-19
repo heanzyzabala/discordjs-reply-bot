@@ -1,22 +1,22 @@
 const Mongo = require('./mongo');
 const Logger = require('./logger');
 
-function Spiels() {
-  const matchesByCriteria = (mappingKey, key, criteria) => {
-    const { format, matching } = criteria;
-    let key1 = mappingKey;
-    let key2 = key;
-    if (format === 'ignoreCase') {
-      key1 = key1.toLowerCase();
-      key2 = key2.toLowerCase();
-    }
-    if (matching === 'includes') {
-      return key2.includes(key1);
-    }
-    return key1 === key2;
-  };
+const matchesByCriteria = (mappingKey, key, criteria) => {
+  const { format, matching } = criteria;
+  let key1 = mappingKey;
+  let key2 = key;
+  if (format === 'ignoreCase') {
+    key1 = key1.toLowerCase();
+    key2 = key2.toLowerCase();
+  }
+  if (matching === 'includes') {
+    return key2.includes(key1);
+  }
+  return key1 === key2;
+};
 
-  this.find = async (guildId, key) => {
+module.exports = {
+  async find(guildId, key) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { error: true };
@@ -36,9 +36,8 @@ function Spiels() {
     } finally {
       client.close();
     }
-  };
-
-  this.save = async (guildId, mapping) => {
+  },
+  async save(guildId, mapping) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { error: true };
@@ -64,9 +63,8 @@ function Spiels() {
     } finally {
       client.close();
     }
-  };
-
-  this.list = async (guildId) => {
+  },
+  async list(guildId) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { error: true };
@@ -83,9 +81,8 @@ function Spiels() {
     } finally {
       client.close();
     }
-  };
-  
-  this.remove = async (guildId, key) => {
+  },
+  async remove(guildId, key) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { error: true };
@@ -109,6 +106,5 @@ function Spiels() {
     } finally {
       client.close();
     }
-  };
-}
-module.exports = new Spiels();
+  },
+};
