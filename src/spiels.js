@@ -48,7 +48,6 @@ module.exports = {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
         const { mappings } = spiel;
-        console.log('maxMappings');
         if (mappings.length >= maxMappings) {
           return { limit: { reached: true, count: maxMappings }, error: false };
         }
