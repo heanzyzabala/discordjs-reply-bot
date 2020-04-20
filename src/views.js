@@ -38,11 +38,15 @@ match:  ${criteria.match}
       .setTitle('Oof. Something went wrong!')
       .setDescription('Please contact the developer if you keep seeing this message.');
   },
-  warning(user, message) {
-    return new Discord.MessageEmbed()
+  warning(user, message, description) {
+    const msg = new Discord.MessageEmbed()
       .setColor('#cddc39')
       .setAuthor(user)
       .setTitle(message);
+    if (description) {
+      msg.setDescription(description);
+    }
+    return msg;
   },
   ok(user, message) {
     return new Discord.MessageEmbed()

@@ -1,6 +1,8 @@
 const Mongo = require('./mongo');
 const Logger = require('./logger');
 
+const maxMappings = parseInt(process.env.MAX_MAPPINGS, 10);
+
 const matchesByCriteria = (mappingKey, key, criteria) => {
   const { format, match } = criteria;
   let key1 = mappingKey;
@@ -46,6 +48,10 @@ module.exports = {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
         const { mappings } = spiel;
+        console.log('maxMappings');
+        if (mappings.length >= maxMappings) {
+          return { limit: { reached: true, count: maxMappings }, error: false };
+        }
         const index = mappings.findIndex((m) => m.key === mapping.key);
         if (index === -1) {
           mappings.push(mapping);
@@ -56,7 +62,7 @@ module.exports = {
       } else {
         await db.collection('spiels').insertOne({ guild_id: guildId, mappings: [mapping] });
       }
-      return { error: false };
+      return { limit: { reached: false, count: maxMappings }, error: false };
     } catch (err) {
       Logger.error({ error: err });
       return { error: true };

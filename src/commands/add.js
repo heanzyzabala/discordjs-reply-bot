@@ -21,12 +21,17 @@ module.exports = {
         match: (matches[3] && matches[3].slice(2)) || 'caseSensitive',
       },
     };
-    const { error } = await Spiels.save(message.member.guild.id, mapping);
+    const { limit, error } = await Spiels.save(message.member.guild.id, mapping);
     Logger.info({
-      src: 'save.js#execute()', error, mapping,
+      src: 'save.js#execute()', limit, mapping, error,
     });
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
+      return;
+    }
+
+    if (limit.reached) {
+      message.channel.send(Views.warning(message.member.user.username, 'Limit reached', `You can only add ${limit.count} mappings.`));
       return;
     }
     message.channel.send(Views.ok(message.member.user.username, 'You\'ve added a new mapping'));
