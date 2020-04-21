@@ -2,7 +2,7 @@
 /* eslint-disable import/no-dynamic-require */
 require('dotenv').config();
 
-const token = process.env.DISCORD_BOT_RIPOSTE_TOKEN;
+const token = process.env.DISCORD_REPLY_BOT_TOKEN;
 const prefix = process.env.PREFIX;
 
 const fs = require('fs');

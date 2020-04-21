@@ -6,7 +6,7 @@ module.exports = {
   async connect() {
     try {
       const mongoUrl = process.env.MONGO_URL;
-      const mongoDbName = process.env.MONGO_RIPOSTE_DB;
+      const mongoDbName = process.env.MONGO_DISCORD_REPLY_BOT_DB;
       const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
       return { db: client.db(mongoDbName), client, error: false };
     } catch (error) {

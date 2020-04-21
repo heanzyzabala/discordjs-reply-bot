@@ -1,19 +1,19 @@
 {
-  "name": "riposte",
+  "name": "discord-reply-bot",
   "version": "1.0.0",
   "description": "",
   "main": "client.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heanzyzabala/riposte.git"
+    "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/heanzyzabala/riposte/issues"
+    "url": "https://github.com/heanzyzabala/discord-reply-bot/issues"
   },
-  "homepage": "https://github.com/heanzyzabala/riposte#readme",
+  "homepage": "https://github.com/heanzyzabala/discord-reply-bot#readme",
   "dependencies": {
     "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
