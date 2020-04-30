@@ -1,29 +1,59 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
-const Chai = require('chai');
-const Sinon = require('sinon');
-const Assert = require('assert');
-const expect = Chai.expect;
+const chai = require('chai');
+const sinon = require('sinon');
+
+const { expect } = chai;
 
 const Add = require('../../src/commands/add');
 const Views = require('../../src/views');
 
 describe('add', () => {
+  it('should return name', () => {
+    expect(Add.name).to.equal('add');
+  });
+  it('should return aliases', () => {
+    expect(Add.aliases).to.deep.equal(['a']);
+  });
+  it('should return usage', () => {
+    expect(Add.usage).to.equal('"<key>" "<value>" --includes? --ignoreCase?');
+  });
   describe('#execute', () => {
-    it('should return when args does not match pattern', () => {
-      const username = Sinon.spy();
-      const user = { username };
-      const member = { user };
-      const send = Sinon.spy();
-      const channel = { send };
-      const message = { channel, member };
+    let username = sinon.spy();
+    let user = { username };
+    let member = { user };
+    let send = sinon.spy();
+    let channel = { send };
+    let message = { channel, member };
+    const argsList = [
+      'hello world',
+      '"hello" world',
+      'hello "world"',
+      '"hello" "world" --notIncludes',
+      '"hello" "world" --notIgnoreCase',
+      '"hello" "world" --notIncludes --notIgnoreCase',
+    ];
+    for (i in argsList) {
+      beforeEach(() => {
+        sinon.restore();
+        username = sinon.spy();
+        user = { username };
+        member = { user };
+        send = sinon.spy();
+        channel = { send };
+        message = { channel, member };
+      });
+      it(`should return when args: ${argsList[i]} does not match pattern`, () => {
+        const ViewsSpy = sinon.spy(Views);
 
-      const ViewsSpy = Sinon.spy(Views);
+        Add.execute(message, argsList[i]);
 
-      Add.execute(message, 'asdfghjkl');
-
-      expect(send.calledOnce).to.be.true;
-      expect(ViewsSpy.usage.calledOnce).to.be.true;
-    });
+        expect(send.calledOnce).to.be.true;
+        expect(ViewsSpy.usage.calledOnce).to.be.true;
+      });
+    }
   });
 });

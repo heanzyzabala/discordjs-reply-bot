@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
   },
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha test/** --exit"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
