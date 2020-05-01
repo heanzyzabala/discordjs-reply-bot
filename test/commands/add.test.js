@@ -35,6 +35,7 @@ describe('add', () => {
       '"hello" "world" --notIncludes',
       '"hello" "world" --notIgnoreCase',
       '"hello" "world" --notIncludes --notIgnoreCase',
+      '"he"llo" ""world"',
     ];
     for (i in argsList) {
       beforeEach(() => {
