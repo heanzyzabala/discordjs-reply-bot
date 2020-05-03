@@ -115,8 +115,8 @@ describe('add', () => {
       expect(spielsStub.calledOnce).to.be.true;
       expect(send.calledOnce).to.be.true;
       expect(viewsSpy.calledOnce).to.be.true;
-    });
-    it('should show error when limit reached', async () => {
+    }); 
+    it('should show error when limit reached', async () => { 
       const viewsSpy = sinon.spy(Views, 'warning');
       const matchesStub = sinon.stub(Add, 'matches').returns({ matches: [] });
       const mapStub = sinon.stub(Add, 'map').returns({});
@@ -125,7 +125,7 @@ describe('add', () => {
 
       await Add.execute(message, '');
 
-      expect(matchesStub.calledOnce).to.be.true;
+      expect(matchesStub.calledOnce).to.be.true; 
       expect(mapStub.calledOnce).to.be.true;
       expect(spielsStub.calledOnce).to.be.true;
       expect(send.calledOnce).to.be.true;

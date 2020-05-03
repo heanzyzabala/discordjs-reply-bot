@@ -9,7 +9,7 @@ const sinon = require('sinon');
 const { expect } = chai;
 
 const Remove = require('../../src/commands/remove');
-const Views = require('../../src/views'); 
+const Views = require('../../src/views');
 describe('remove', () => {
   it('should return name', () => {
     expect(Remove.name).to.equal('remove');
@@ -26,31 +26,57 @@ describe('remove', () => {
       '"hello',
       'hello"',
       '"hel"lo"',
-      '-1'
+      '-1',
     ];
     for (i in invalidArgs) {
       it(`should return null when args: ${invalidArgs[i]} does not match pattern`, () => {
-        const { matches, type } = Remove.matches(invalidArgs[i]);
-        expect(matches).to.be.null;
+        const { match, type } = Remove.matches(invalidArgs[i]);
+        expect(match).to.be.null;
         expect(type).to.be.null;
       });
     }
     const validArgs = [
       {
         args: '"hello"',
-        type: 'key'
+        value: 'hello',
+        type: 'key',
       },
       {
         args: '1',
-        type: 'index'
-      }
+        value: '1',
+        type: 'index',
+      },
     ];
     for (i in validArgs) {
       it(`should return value and type when args: ${validArgs[i].args} matches pattern`, () => {
-        const { matches, type } = Remove.matches(validArgs[i].args);
-        expect(matches).to.not.be.null;
+        const { match, type } = Remove.matches(validArgs[i].args);
+        expect(match).to.be.equal(validArgs[i].value);
         expect(type).to.be.equal(validArgs[i].type);
       });
     }
+  });
+  describe('#execute', () => {
+    let username;
+    let user;
+    let guild;
+    let id;
+    let member;
+    let send;
+    let channel;
+    let message;
+    beforeEach(() => {
+      sinon.restore();
+      username = sinon.spy();
+      user = { username };
+      id = sinon.spy();
+      guild = { id };
+      member = { user, guild };
+      send = sinon.spy();
+      channel = { send };
+      message = { channel, member };
+    });
+    it('should show usage when args is invalid', () => {
+      
+    })
   })
 });
