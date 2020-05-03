@@ -6,7 +6,28 @@ module.exports = {
   name: 'remove',
   aliases: ['r'],
   usage: '"<key>"|<index>',
+  matches (args) {
+    const keyPattern = '^"([^"]*)"$';
+    let matches = args.match(keyPattern);
+    if (matches) {
+      return {
+        matches,
+        type: 'key'
+      };
+    }
+    const indexPattern = '^(\\d+)$';
+    matches = args.match(indexPattern);
+    if (matches) {
+      return {
+        matches,
+        type: 'index'
+      };
+    }
+    return { matches: null, type: null }
+  },
   async execute(message, args) {
+    const matches = match(args);
+
     const { removed, error, match } = await this.remove(message.member.guild.id, args);
     Logger.info({
       src: 'remove.js#execute()', removed, error, match,

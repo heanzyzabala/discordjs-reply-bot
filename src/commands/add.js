@@ -6,10 +6,13 @@ module.exports = {
   name: 'add',
   aliases: ['a'],
   usage: '"<key>" "<value>" --includes? --ignoreCase?',
-  async execute(message, args) {
+  matches (args) {
     const pattern = '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$';
-    const matches = args.match(pattern);
-    if (!matches) {
+    return args.match(pattern);
+  },
+  async execute(message, args) {
+    const matches = this.matches(args);
+    if(!matches) {
       message.channel.send(Views.usage(message.member.user.username, this.usage));
       return;
     }
