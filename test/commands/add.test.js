@@ -22,12 +22,12 @@ describe('add', () => {
     expect(Add.usage).to.equal('"<key>" "<value>" --includes? --ignoreCase?');
   });
   describe('#execute', () => {
-    let username = sinon.spy();
-    let user = { username };
-    let member = { user };
-    let send = sinon.spy();
-    let channel = { send };
-    let message = { channel, member };
+    let username;
+    let user;
+    let member;
+    let send;
+    let channel;
+    let message;
     const argsList = [
       'hello world',
       '"hello" world',
