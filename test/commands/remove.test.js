@@ -20,32 +20,36 @@ describe('remove', () => {
   it('should return usage', () => {
     expect(Remove.usage).to.equal('"<key>"|<index>');
   });
-  describe('#execute', () => {
-    let username;
-    let user;
-    let member;
-    let send;
-    let channel;
-    let message;
-    const argsList = [
+  describe('#matches', () => {
+    const invalidArgs = [
       'hello',
       '"hello',
       'hello"',
+      '"hel"lo"',
       '-1'
     ];
-    for (i in argsList) {
-      beforeEach(() => {
-        sinon.restore();
-        username = sinon.spy();
-        user = { username };
-        member = { user };
-        send = sinon.spy();
-        channel = { send };
-        message = { channel, member };
-      });
-      it(`should return when args: ${argsList[i]} does not match pattern`, () => {
-        const { matches, type } = Remove.matches(argsList[i]);
+    for (i in invalidArgs) {
+      it(`should return null when args: ${invalidArgs[i]} does not match pattern`, () => {
+        const { matches, type } = Remove.matches(invalidArgs[i]);
         expect(matches).to.be.null;
+        expect(type).to.be.null;
+      });
+    }
+    const validArgs = [
+      {
+        args: '"hello"',
+        type: 'key'
+      },
+      {
+        args: '1',
+        type: 'index'
+      }
+    ];
+    for (i in validArgs) {
+      it(`should return value and type when args: ${validArgs[i].args} matches pattern`, () => {
+        const { matches, type } = Remove.matches(validArgs[i].args);
+        expect(matches).to.not.be.null;
+        expect(type).to.be.equal(validArgs[i].type);
       });
     }
   })
