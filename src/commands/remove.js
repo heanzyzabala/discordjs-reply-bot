@@ -32,7 +32,7 @@ module.exports = {
     return { error: Spiels.removeByIndex(match) };
   },
   async execute(message, args) {
-    const { match, type } = this.match(args);
+    const { match, type } = this.matches(args);
     if (!match) {
       message.channel.send(Views.usage(message.member.user.username));
       return;

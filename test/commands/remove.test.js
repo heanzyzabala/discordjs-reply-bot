@@ -10,6 +10,7 @@ const { expect } = chai;
 
 const Remove = require('../../src/commands/remove');
 const Views = require('../../src/views');
+
 describe('remove', () => {
   it('should return name', () => {
     expect(Remove.name).to.equal('remove');
@@ -76,7 +77,13 @@ describe('remove', () => {
       message = { channel, member };
     });
     it('should show usage when args is invalid', () => {
-      
-    })
-  })
+      sinon.stub(Remove, 'matches').returns({ match: null });
+      const viewsSpy = sinon.spy(Views, 'usage');
+
+      Remove.execute(message, '');
+
+      expect(send.calledOnce).to.be.true;
+      expect(viewsSpy.calledOnce).to.be.true;
+    });
+  });
 });
