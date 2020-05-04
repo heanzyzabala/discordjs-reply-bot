@@ -85,5 +85,27 @@ describe('remove', () => {
       expect(send.calledOnce).to.be.true;
       expect(viewsSpy.calledOnce).to.be.true;
     });
+    it('should show error when removing failed', () => {
+      const matchesStub = sinon.stub(Remove, 'matches').returns({ match: true });
+      const viewsSpy = sinon.spy(Views, 'error');
+
+      Remove.execute(message, '');
+
+      expect(matchesStub.calledOnce).to.be.true;
+      expect(send.calledOnce).to.be.true;
+      expect(viewsSpy.calledOnce).to.be.true;
+    });
+    it('should show ok', () => {
+      const matchesStub = sinon.stub(Remove, 'matches').returns({ match: true });
+      const removeStub = sinon.stub(Remove, 'remove').returns({ error: false });
+      const viewsSpy = sinon.spy(Views, 'ok');
+
+      Remove.execute(message, '');
+
+      expect(matchesStub.calledOnce).to.be.true;
+      expect(removeStub.calledOnce).to.be.true;
+      expect(send.calledOnce).to.be.true;
+      expect(viewsSpy.calledOnce).to.be.true;
+    });
   });
 });
