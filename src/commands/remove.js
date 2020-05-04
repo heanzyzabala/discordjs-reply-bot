@@ -37,12 +37,16 @@ module.exports = {
       message.channel.send(Views.usage(message.member.user.username));
       return;
     }
-    const { error } = this.remove(match, type);
+    const { removed, error } = this.remove(match, type);
     Logger.info({
       src: 'remove.js#execute()', error, match,
     });
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
+      return;
+    }
+    if (!removed) {
+      message.channel.send(Views.warning(message.member.user.username, 'Unable to remove'));
       return;
     }
     message.channel.send(Views.ok(message.member.user.username, 'You\'ve removed a mapping'));

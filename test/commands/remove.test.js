@@ -16,7 +16,7 @@ describe('remove', () => {
     expect(Remove.name).to.equal('remove');
   });
   it('should return aliases', () => {
-    expect(Remove.aliases).to.deep.equal(['r'])
+    expect(Remove.aliases).to.deep.equal(['r']);
   });
   it('should return usage', () => {
     expect(Remove.usage).to.equal('"<key>"|<index>');
@@ -85,7 +85,7 @@ describe('remove', () => {
       expect(send.calledOnce).to.be.true;
       expect(viewsSpy.calledOnce).to.be.true;
     });
-    it('should show error when removing failed', () => {
+    it('should show error when removing has error', () => {
       const matchesStub = sinon.stub(Remove, 'matches').returns({ match: true });
       const viewsSpy = sinon.spy(Views, 'error');
 
@@ -95,9 +95,21 @@ describe('remove', () => {
       expect(send.calledOnce).to.be.true;
       expect(viewsSpy.calledOnce).to.be.true;
     });
+    it('should show warning when removing failed', () => {
+      const matchesStub = sinon.stub(Remove, 'matches').returns({ match: true });
+      const removeStub = sinon.stub(Remove, 'remove').returns({ removed: false, error: false });
+      const viewsSpy = sinon.spy(Views, 'warning');
+
+      Remove.execute(message, '');
+
+      expect(matchesStub.calledOnce).to.be.true;
+      expect(removeStub.calledOnce).to.be.true;
+      expect(send.calledOnce).to.be.true;
+      expect(viewsSpy.calledOnce).to.be.true;
+    });
     it('should show ok', () => {
       const matchesStub = sinon.stub(Remove, 'matches').returns({ match: true });
-      const removeStub = sinon.stub(Remove, 'remove').returns({ error: false });
+      const removeStub = sinon.stub(Remove, 'remove').returns({ removed: true, error: false });
       const viewsSpy = sinon.spy(Views, 'ok');
 
       Remove.execute(message, '');
