@@ -21,7 +21,7 @@ module.exports = {
   async find(guildId, key) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
-      return { error: true };
+      return { value: null, error: true };
     }
     try {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
