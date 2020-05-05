@@ -10,7 +10,7 @@ module.exports = {
       return;
     }
     if (value) {
-      Logger.initContext(message, 'find');
+      // Logger.initContext(message, 'find');
       Logger.info({ src: 'find#execute()', value });
       message.channel.send(`${message.author}, ${value}`);
     }

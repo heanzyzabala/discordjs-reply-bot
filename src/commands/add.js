@@ -35,7 +35,6 @@ module.exports = {
       message.channel.send(Views.error(message.member.user.username));
       return;
     }
-
     if (limit.reached) {
       message.channel.send(Views.warning(message.member.user.username, 'Limit reached', `You can only add ${limit.count} mappings.`));
       return;
