@@ -25,7 +25,7 @@ module.exports = {
     }
     return { match: null, type: null };
   },
-  remove(match, type) {
+  async remove(match, type) {
     if (type === 'key') {
       return { error: Spiels.removeByKey(match) };
     }
@@ -37,7 +37,7 @@ module.exports = {
       message.channel.send(Views.usage(message.member.user.username));
       return;
     }
-    const { removed, error } = this.remove(match, type);
+    const { removed, error } = await this.remove(match, type);
     Logger.info({
       src: 'remove.js#execute()', error, match,
     });

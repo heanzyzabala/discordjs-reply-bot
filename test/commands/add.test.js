@@ -1,4 +1,4 @@
-/*r eslint-disable no-loop-func */
+/* eslint-disable no-loop-func */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
@@ -55,7 +55,7 @@ describe('add', () => {
   });
   describe('#map', () => {
     it('should successfuly map', () => {
-      const matches = [ '', 'hello', 'world', '--includes', '--ignoreCase' ];
+      const matches = ['', 'hello', 'world', '--includes', '--ignoreCase'];
 
       const mapping = Add.map(matches);
 
@@ -65,7 +65,7 @@ describe('add', () => {
       expect(mapping.criteria.match).to.be.equal('includes');
     });
     it('should return default criteria', () => {
-      const matches = [ '', 'hello', 'world' ];
+      const matches = ['', 'hello', 'world'];
 
       const mapping = Add.map(matches);
 
@@ -77,7 +77,7 @@ describe('add', () => {
     let username;
     let user;
     let guild;
-    let id; 
+    let id;
     let member;
     let send;
     let channel;
@@ -94,8 +94,8 @@ describe('add', () => {
       message = { channel, member };
     });
     it('should show usage when args is invalid', () => {
-      const viewsSpy = sinon.spy(Views, 'usage'); 
-      sinon.stub(Add, 'matches').returns({ matches: null })
+      const viewsSpy = sinon.spy(Views, 'usage');
+      sinon.stub(Add, 'matches').returns({ matches: null });
 
       Add.execute(message, 'hello world');
 
@@ -115,8 +115,8 @@ describe('add', () => {
       expect(spielsStub.calledOnce).to.be.true;
       expect(send.calledOnce).to.be.true;
       expect(viewsSpy.calledOnce).to.be.true;
-    }); 
-    it('should show error when limit reached', async () => { 
+    });
+    it('should show error when limit reached', async () => {
       const viewsSpy = sinon.spy(Views, 'warning');
       const matchesStub = sinon.stub(Add, 'matches').returns({ matches: [] });
       const mapStub = sinon.stub(Add, 'map').returns({});
@@ -125,7 +125,7 @@ describe('add', () => {
 
       await Add.execute(message, '');
 
-      expect(matchesStub.calledOnce).to.be.true; 
+      expect(matchesStub.calledOnce).to.be.true;
       expect(mapStub.calledOnce).to.be.true;
       expect(spielsStub.calledOnce).to.be.true;
       expect(send.calledOnce).to.be.true;
@@ -144,7 +144,7 @@ describe('add', () => {
       expect(mapStub.calledOnce).to.be.true;
       expect(spielsStub.calledOnce).to.be.true;
       expect(send.calledOnce).to.be.true;
-      expect(viewsSpy.calledOnce).to.be.true;     
-    })
-  })
+      expect(viewsSpy.calledOnce).to.be.true;
+    });
+  });
 });
