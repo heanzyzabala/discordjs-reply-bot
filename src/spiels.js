@@ -25,6 +25,7 @@ module.exports = {
     }
     try {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
+      console.log(spiel)
       if (spiel) {
         const reply = spiel.mappings.find((m) => matchesByCriteria(m.key, key, m.criteria));
         if (reply) {
@@ -33,7 +34,7 @@ module.exports = {
       }
       return { value: null, error: false };
     } catch (err) {
-      Logger.error({ error: err });
+      // Logger.error({ error: err });
       return { value: null, error: true };
     } finally {
       client.close();
