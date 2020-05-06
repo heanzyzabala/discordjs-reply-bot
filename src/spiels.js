@@ -33,8 +33,7 @@ module.exports = {
       }
       return { value: null, error: false };
     } catch (err) {
-      console.log(err)
-      // Logger.error({ error: err });
+      Logger.error({ error: err });
       return { value: null, error: true };
     } finally {
       client.close();
