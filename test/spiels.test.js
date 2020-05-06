@@ -12,82 +12,82 @@ const Spiels = require('../src/spiels');
 const Mongo = require('../src/mongo');
 
 describe('spiels', () => {
-  // describe('#matchesByCriteria', () => {
-  //   const matchedMappings = [
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'ABC',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'includes',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'aBc',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'includes',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'ABCD',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'includes',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'aBcD',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'includes',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'ABCD',
-  //       criteria: {
-  //         format: 'caseSensitive',
-  //         match: 'includes',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'ABC',
-  //       criteria: {
-  //         format: 'caseSensitive',
-  //         match: 'exact',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'abc',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'exact',
-  //       },
-  //     },
-  //     {
-  //       mappingKey: 'ABC',
-  //       key: 'ABC',
-  //       criteria: {
-  //         format: 'ignoreCase',
-  //         match: 'exact',
-  //       },
-  //     },
-  //   ];
-  //   for (i in matchedMappings) {
-  //     it('should return true', () => {
-  //       const m = matchedMappings[i];
-  //       const result = Spiels.matchesByCriteria(m.mappingKey, m.key, m.criteria);
+  describe('#matchesByCriteria', () => {
+    const matchedMappings = [
+      {
+        mappingKey: 'ABC',
+        key: 'ABC',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'includes',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'aBc',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'includes',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'ABCD',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'includes',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'aBcD',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'includes',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'ABCD',
+        criteria: {
+          format: 'caseSensitive',
+          match: 'includes',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'ABC',
+        criteria: {
+          format: 'caseSensitive',
+          match: 'exact',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'abc',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'exact',
+        },
+      },
+      {
+        mappingKey: 'ABC',
+        key: 'ABC',
+        criteria: {
+          format: 'ignoreCase',
+          match: 'exact',
+        },
+      },
+    ];
+    for (x in matchedMappings) {
+      it('should return true', () => {
+        const m = matchedMappings[x];
+        const result = Spiels.matchesByCriteria(m.mappingKey, m.key, m.criteria);
 
-  //       expect(result).to.be.true;
-  //     });
-  //   }
-  // });
+        expect(result).to.be.true;
+      });
+    }
+  });
   describe('#find', () => {
     let close;
     let client;
