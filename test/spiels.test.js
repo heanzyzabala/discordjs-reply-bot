@@ -14,12 +14,13 @@ describe('spiels', () => {
     let client;
     let collection;
     let findOne;
+    let spiel;
+    let mappings;
     let db;
     beforeEach(() => {
       sinon.restore();
       close = sinon.spy();
       client = { close };
-      findOne = sinon.stub().returns({ spiel: true });
       collection = { findOne };
       db = { collection() { return collection; } };
     });
@@ -34,6 +35,9 @@ describe('spiels', () => {
     });
     it('should return value: null, error: false when guild does not exist', async () => {
       const mongoStub = sinon.stub(Mongo, 'connect').returns({ db, client, error: false });
+      findOne = sinon.stub().returns({ spiel: null });
+      collection = { findOne };
+      db = { collection() { return collection; } };
 
       const { value, error } = await Spiels.find(1, '');
 
@@ -43,13 +47,26 @@ describe('spiels', () => {
       expect(error).to.be.equal(false);
       expect(close.calledOnce).to.be.true;
     });
-    it('should return value:null, error:false when mapping does not exist', async () => {
-      const mongoStub = sinon.stub(Mongo, 'connect').returns({ client, error: false });
-      findOne = sinon.stub().returns({ spiel: true });
+    it('should return value: null, error: false when mapping does not exist', async () => {
+      const mongoStub = sinon.stub(Mongo, 'connect').returns({ db, client, error: false });
+      mappings = [
+        {
+          key: 'key',
+          criteria: {
+            format: 'ignoreCase',
+            match: 'exact',
+          },
+        },
+      ];
+      spiel = { mappings };
+      findOne = sinon.stub().returns({ spiel });
+      collection = { findOne };
+      db = { collection() { return collection; } };
 
       const { value, error } = await Spiels.find(1, '');
 
       expect(mongoStub.calledOnce).to.be.true;
+      expect(findOne.calledOnce).to.be.true;
       expect(value).to.be.equal(null);
       expect(error).to.be.equal(false);
       expect(close.calledOnce).to.be.true;

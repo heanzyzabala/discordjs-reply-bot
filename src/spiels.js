@@ -3,37 +3,37 @@ const Logger = require('./logger');
 
 const maxMappings = parseInt(process.env.MAX_MAPPINGS, 10);
 
-const matchesByCriteria = (mappingKey, key, criteria) => {
-  const { format, match } = criteria;
-  let key1 = mappingKey;
-  let key2 = key;
-  if (format === 'ignoreCase') {
-    key1 = key1.toLowerCase();
-    key2 = key2.toLowerCase();
-  }
-  if (match === 'includes') {
-    return key2.includes(key1);
-  }
-  return key1 === key2;
-};
 
 module.exports = {
+  matchesByCriteria(mappingKey, key, criteria) {
+    const { format, match } = criteria;
+    let key1 = mappingKey;
+    let key2 = key;
+    if (format === 'ignoreCase') {
+      key1 = key1.toLowerCase();
+      key2 = key2.toLowerCase();
+    }
+    if (match === 'includes') {
+      return key2.includes(key1);
+    }
+    return key1 === key2;
+  },
   async find(guildId, key) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
       return { value: null, error: true };
     }
     try {
-      const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
-      console.log(spiel)
+      const { spiel } = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
-        const reply = spiel.mappings.find((m) => matchesByCriteria(m.key, key, m.criteria));
+        const reply = spiel.mappings.find((m) => this.matchesByCriteria(m.key, key, m.criteria));
         if (reply) {
           return { value: reply.value, error: false };
         }
       }
       return { value: null, error: false };
     } catch (err) {
+      console.log(err)
       // Logger.error({ error: err });
       return { value: null, error: true };
     } finally {
