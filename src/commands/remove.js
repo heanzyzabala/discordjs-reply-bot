@@ -11,7 +11,7 @@ module.exports = {
     let matches = args.match(keyPattern);
     if (matches) {
       return {
-        match: matches[0],
+        match: matches[1],
         type: 'key',
       };
     }
@@ -19,7 +19,7 @@ module.exports = {
     matches = args.match(indexPattern);
     if (matches) {
       return {
-        match: matches[0],
+        match: matches[1],
         type: 'index',
       };
     }

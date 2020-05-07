@@ -1,6 +1,3 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 const chai = require('chai');
@@ -79,14 +76,13 @@ describe('spiels', () => {
         },
       },
     ];
-    for (x in matchedMappings) {
+    matchedMappings.forEach(({ mappingKey, key, criteria }) => {
       it('should return true', () => {
-        const m = matchedMappings[x];
-        const result = Spiels.matchesByCriteria(m.mappingKey, m.key, m.criteria);
+        const result = Spiels.matchesByCriteria(mappingKey, key, criteria);
 
         expect(result).to.be.true;
       });
-    }
+    });
   });
   describe('#find', () => {
     let close;

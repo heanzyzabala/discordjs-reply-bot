@@ -1,6 +1,3 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 const chai = require('chai');

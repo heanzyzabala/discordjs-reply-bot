@@ -1,6 +1,3 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 const chai = require('chai');
@@ -29,13 +26,13 @@ describe('remove', () => {
       '"hel"lo"',
       '-1',
     ];
-    for (i in invalidArgs) {
-      it(`should return null when args: ${invalidArgs[i]} does not match pattern`, () => {
-        const { match, type } = Remove.matches(invalidArgs[i]);
+    invalidArgs.forEach((args) => {
+      it(`should return null when args: ${args} does not match pattern`, () => {
+        const { match, type } = Remove.matches(args);
         expect(match).to.be.null;
         expect(type).to.be.null;
       });
-    }
+    });
     const validArgs = [
       {
         args: '"hello"',
@@ -48,13 +45,13 @@ describe('remove', () => {
         type: 'index',
       },
     ];
-    for (i in validArgs) {
-      it(`should return value and type when args: ${validArgs[i].args} matches pattern`, () => {
-        const { match, type } = Remove.matches(validArgs[i].args);
-        expect(match).to.be.equal(validArgs[i].value);
-        expect(type).to.be.equal(validArgs[i].type);
+    validArgs.forEach(({ args, value, type: argsType }) => {
+      it(`should return value and type when args: ${args} matches pattern`, () => {
+        const { match, type } = Remove.matches(args);
+        expect(type).to.be.equal(argsType);
+        expect(match).to.be.equal(value);
       });
-    }
+    });
   });
   describe('#execute', () => {
     let username;

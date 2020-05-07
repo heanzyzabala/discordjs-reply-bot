@@ -1,6 +1,3 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 const chai = require('chai');
@@ -33,12 +30,12 @@ describe('add', () => {
       '"hello" "world" --ignoreCase --includes',
       '"he"llo" ""world"',
     ];
-    for (i in invalidArgs) {
-      it(`should return null when args: ${invalidArgs[i]} does not match pattern`, () => {
-        const { matches } = Add.matches(invalidArgs[i]);
+    invalidArgs.forEach((args) => {
+      it(`should return null when args: ${args} does not match pattern`, () => {
+        const { matches } = Add.matches(args);
         expect(matches).to.be.null;
       });
-    }
+    });
     const validArgs = [
       '"hello" "world"',
       '"hello world" "hola mundo"',
@@ -46,12 +43,12 @@ describe('add', () => {
       '"hello" "world" --ignoreCase',
       '"hello" "world" --includes --ignoreCase',
     ];
-    for (i in validArgs) {
-      it(`should return value when args: ${validArgs[i]} matches pattern`, () => {
-        const { matches } = Add.matches(validArgs[i]);
+    validArgs.forEach((args) => {
+      it(`should return value when args: ${args} matches pattern`, () => {
+        const { matches } = Add.matches(args);
         expect(matches).to.not.be.null;
       });
-    }
+    });
   });
   describe('#map', () => {
     it('should successfuly map', () => {
