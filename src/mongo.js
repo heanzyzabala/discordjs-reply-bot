@@ -10,7 +10,7 @@ module.exports = {
       const client = await MongoClient.connect(mongoUrl, { useUnifiedTopology: true });
       return { db: client.db(mongoDbName), client, error: false };
     } catch (error) {
-      Logger.error({ error });
+      Logger.error({ src: 'mongo.js#connect()', error });
       return { db: null, client: null, error: true };
     }
   },

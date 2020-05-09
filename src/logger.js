@@ -59,8 +59,13 @@ function Logger() {
     logger.info(msg);
   };
 
-  this.error = (msg) => {
-    logger.error(msg);
+  this.error = ({ src, error }) => {
+    const { name, message, stack } = error;
+    logger.error({ src, error: { name, message, stack } });
+  };
+
+  this.fatal = (msg) => {
+    logger.fatal(msg);
   };
 }
 module.exports = new Logger();

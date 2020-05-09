@@ -9,7 +9,7 @@ const Spiels = require('../src/spiels');
 const Mongo = require('../src/mongo');
 
 describe('spiels', () => {
-  describe('#matchesByCriteria', () => {
+  describe('#matches', () => {
     const matchedMappings = [
       {
         mappingKey: 'ABC',
@@ -78,8 +78,7 @@ describe('spiels', () => {
     ];
     matchedMappings.forEach(({ mappingKey, key, criteria }) => {
       it('should return true', () => {
-        const result = Spiels.matchesByCriteria(mappingKey, key, criteria);
-
+        const result = Spiels.matches(mappingKey, key, criteria);
         expect(result).to.be.true;
       });
     });
@@ -110,7 +109,7 @@ describe('spiels', () => {
     });
     it('should return value: null, error: false when guild does not exist', async () => {
       const mongoStub = sinon.stub(Mongo, 'connect').returns({ db, client, error: false });
-      findOne = sinon.stub().returns({ spiel: null });
+      findOne = sinon.stub().returns(nul);
       collection = { findOne };
       db = { collection() { return collection; } };
 
@@ -127,6 +126,7 @@ describe('spiels', () => {
       mappings = [
         {
           key: 'key',
+          value: 'value',
           criteria: {
             format: 'ignoreCase',
             match: 'exact',
@@ -134,7 +134,7 @@ describe('spiels', () => {
         },
       ];
       spiel = { mappings };
-      findOne = sinon.stub().returns({ spiel });
+      findOne = sinon.stub().returns(spiel);
       collection = { findOne };
       db = { collection() { return collection; } };
 

@@ -42,12 +42,13 @@ try {
           commandName.length + prefix.length + 1, message.content.length,
         );
         command.execute(message, args);
-        return;
       }
+    } else {
+      Logger.initContext(message, 'find');
+      Find.execute(message);
     }
-    Find.execute(message);
   });
   client.login(token);
 } catch (err) {
-  Logger.error(err);
+  Logger.error({ src: 'client.js', err });
 }

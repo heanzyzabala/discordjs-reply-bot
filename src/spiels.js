@@ -3,9 +3,8 @@ const Logger = require('./logger');
 
 const maxMappings = parseInt(process.env.MAX_MAPPINGS, 10);
 
-
 module.exports = {
-  matchesByCriteria(mappingKey, key, criteria) {
+  matches(mappingKey, key, criteria) {
     const { format, match } = criteria;
     let key1 = mappingKey;
     let key2 = key;
@@ -24,16 +23,16 @@ module.exports = {
       return { value: null, error: true };
     }
     try {
-      const { spiel } = await db.collection('spiels').findOne({ guild_id: guildId });
+      const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
-        const reply = spiel.mappings.find((m) => this.matchesByCriteria(m.key, key, m.criteria));
+        const reply = spiel.mappings.find((m) => this.matches(m.key, key, m.criteria));
         if (reply) {
           return { value: reply.value, error: false };
         }
       }
       return { value: null, error: false };
     } catch (err) {
-      Logger.error({ error: err });
+      Logger.error({ src: 'spiels.js#find()', error: err });
       return { value: null, error: true };
     } finally {
       client.close();
@@ -64,7 +63,7 @@ module.exports = {
       return { limit: { reached: false, count: maxMappings }, error: false };
     } catch (err) {
       Logger.error({ error: err });
-      return { error: true };
+      return { limit: { reached: false, count: maxMappings }, error: true };
     } finally {
       client.close();
     }
@@ -72,7 +71,7 @@ module.exports = {
   async list(guildId) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
-      return { error: true };
+      return { mappings: [], error: true };
     }
     try {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
@@ -81,7 +80,7 @@ module.exports = {
       }
       return { mappings: [], error: false };
     } catch (err) {
-      Logger.error({ error: err });
+      Logger.error({ src: 'spiels.js#list()', error: err });
       return { error: true };
     } finally {
       client.close();
@@ -106,7 +105,7 @@ module.exports = {
       }
       return { removed: false, error: false };
     } catch (err) {
-      Logger.error({ error: err });
+      Logger.error({ src: 'spiels.js#removeByKey()', error: err });
       return { remove: false, error: true };
     } finally {
       client.close();
@@ -115,12 +114,13 @@ module.exports = {
   async removeByIndex(guildId, index) {
     const { db, client, error } = await Mongo.connect();
     if (error) {
-      return { error: true };
+      return { removed: false, error: true };
     }
     try {
       const spiel = await db.collection('spiels').findOne({ guild_id: guildId });
       if (spiel) {
         const { mappings } = spiel;
+        console.log(mappings);
         const mapping = mappings[index];
         if (!mapping) {
           return { removed: false, error: false };
@@ -131,7 +131,7 @@ module.exports = {
       }
       return { removed: false, error: false };
     } catch (err) {
-      Logger.error({ error: err });
+      Logger.error({ src: 'spiels.js#removeByIndex', error: err });
       return { removed: false, error: true };
     } finally {
       client.close();

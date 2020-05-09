@@ -27,26 +27,26 @@ module.exports = {
   },
   async remove(match, type) {
     if (type === 'key') {
-      return { error: Spiels.removeByKey(match) };
+      return Spiels.removeByKey(match);
     }
-    return { error: Spiels.removeByIndex(match) };
+    return Spiels.removeByIndex(match);
   },
   async execute(message, args) {
     const { match, type } = this.matches(args);
     if (!match) {
-      message.channel.send(Views.usage(message.member.user.username));
+      message.channel.send(Views.usage(message.member.user.username, this.usage));
       return;
     }
     const { removed, error } = await this.remove(match, type);
     Logger.info({
-      src: 'remove.js#execute()', error, match,
+      src: 'remove.js#execute()', match, type, removed, error,
     });
     if (error) {
       message.channel.send(Views.error(message.member.user.username));
       return;
     }
     if (!removed) {
-      message.channel.send(Views.warning(message.member.user.username, 'Unable to remove'));
+      message.channel.send(Views.warning(message.member.user.username, 'Unable to remove mapping'));
       return;
     }
     message.channel.send(Views.ok(message.member.user.username, 'You\'ve removed a mapping'));
