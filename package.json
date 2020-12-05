@@ -1,0 +1,38 @@
+{
+  "name": "discord-reply-bot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/server\"",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heanzyzabala/discord-reply-bot/issues"
+  },
+  "homepage": "https://github.com/heanzyzabala/discord-reply-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.0",
+    "dotenv": "^8.2.0",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.29",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.16",
+    "@types/uuid": "^8.3.0",
+    "@types/ws": "^7.4.0",
+    "concurrently": "^5.3.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.2"
+  }
+}
