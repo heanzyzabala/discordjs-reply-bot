@@ -3,8 +3,8 @@
     "host": "localhost",
     "port": 5432,
     "username":  "postgres",
-    "password": "thepasswodofdoom",
-    "database": "discord",
+    "password": "thepasswordofdoom",
+    "database": "discord-reply-bot-db",
     "synchronize": true,
     "logging": false,
     "entities": [
