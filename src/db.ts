@@ -1,7 +1,10 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 
-const connect = async () => {
-  await createConnection();
-};
-export default connect();
+(async () => {
+  try {
+    await createConnection();
+  } catch (err) {
+    console.log(JSON.stringify(err));
+  }
+})();

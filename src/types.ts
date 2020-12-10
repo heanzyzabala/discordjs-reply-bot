@@ -3,18 +3,8 @@ export interface Command {
   aliases: string[];
   usage: string;
   options: string[];
-  execute(context: Context): ExecuteCommandResponse;
+  execute(context: Context): Promise<any>;
 }
-
-export interface ExecuteCommandResponse {
-  response: Response;
-  error?: Error;
-}
-
-export interface Response {
-  message?: string;
-}
-
 export interface Error {
   id: string;
   message: string;

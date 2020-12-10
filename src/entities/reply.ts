@@ -1,20 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity({ name: 'replies' })
-export class Reply {
+export class Reply extends BaseEntity {
+  constructor(key: string, value: string, options: string, serverId: string) {
+    super();
+    this.key = key;
+    this.value = value;
+    this.options = options;
+    this.serverId = serverId;
+  }
 
   @PrimaryGeneratedColumn()
-  id: number
+  id: string;
 
   @Column()
-  key: string
+  key: string;
 
   @Column()
-  value: string
+  value: string;
 
   @Column()
-  options: string
+  options: string;
 
   @Column()
-  serverId: string
+  serverId: string;
 }
