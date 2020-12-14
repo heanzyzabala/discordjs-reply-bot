@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/server\"",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/main\"",
     "test": "jest"
   },
   "repository": {
