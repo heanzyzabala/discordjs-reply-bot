@@ -1,7 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 import { User } from './types';
 
-export const Usage = (user: User, message: string) => {
+export const usage = (user: User, message: string) => {
   return new MessageEmbed()
     .setColor('#cddc39')
     .setAuthor(user)
@@ -9,7 +9,7 @@ export const Usage = (user: User, message: string) => {
     .addField('Usage:', '```' + message + '```');
 };
 
-export const Success = (user: User, message: string) => {
+export const success = (user: User, message: string) => {
   return new MessageEmbed()
     .setColor('#4caf50')
     .setAuthor(user)

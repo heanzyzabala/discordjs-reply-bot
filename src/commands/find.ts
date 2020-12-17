@@ -7,31 +7,17 @@ export class Find implements Command {
   readonly aliases: string[] = [];
   readonly usage: string = '';
   readonly options: string[] = [];
-  async execute(context: Context): Promise<any> {
+  async execute({ body, user, server }: Context): Promise<Reply | null> {
     try {
       console.log('finding');
-      const { body } = context;
       const replies: Reply[] = await Reply.find({
-        serverId: context.server.id,
+        serverId: server.id,
       });
       // list of replies
-      const reply = replies.filter((r) => {
-        let { key } = r;
-        let tempBody = body;
-        const options = r.options.split(',');
-        options.forEach((opt) => {
-          if (opt === '--ignoreCase') {
-            key = key.toUpperCase();
-            tempBody = tempBody.toUpperCase();
-          }
-          if (opt === '--includes') {
-            return key.includes(tempBody);
-          }
-          return r.key === tempBody;
-        });
-        return r.key === tempBody;
-      });
-      return reply;
+      const reply = replies.find((r) => {
+        return r.key === 'body'
+      })
+      return reply ? reply : null
     } catch (err) {
       throw new CommandError('E0', 'Generic error');
     }

@@ -3,7 +3,7 @@ import discord, { Message } from 'discord.js';
 import { getCommands } from './commands';
 import { Find } from './commands/find';
 import { CommandError } from './error';
-import { Usage, Success } from './messageEmbeds';
+import { usage, success } from './messageEmbeds';
 const find = new Find();
 
 import { Command, Server, User } from './types';
@@ -40,20 +40,20 @@ client.on('message', async (message: Message) => {
         message.channel.send(msg);
       }
     } else {
-      const { msg } = await find.execute({
+      const reply = await find.execute({
         body: content,
         user,
         server,
       });
-      if (msg) {
-        message.reply(msg);
+      if (reply) {
+        message.reply(reply.value);
       }
     }
   } catch (err) {
     if (err instanceof CommandError) {
       const commandError = err as CommandError;
       if (commandError.id === 'E01') {
-        message.channel.send(Usage(user, commandError.message));
+        message.channel.send(usage(user, commandError.message));
       }
     }
     console.log('went to here');
