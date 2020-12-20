@@ -13,7 +13,7 @@ export class Reply extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   key: string;
 
   @Column()
@@ -22,6 +22,6 @@ export class Reply extends BaseEntity {
   @Column()
   options: string;
 
-  @Column()
+  @Column({ unique: true })
   serverId: string;
 }
