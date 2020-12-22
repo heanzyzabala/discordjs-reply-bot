@@ -19,13 +19,13 @@ export interface Option {
 export interface Context {
   body: string;
   user: User;
-  server: Server;
+  guild: Guild;
 }
 
 export interface User {
   id: string;
 }
 
-export interface Server {
+export interface Guild {
   id: string;
 }

@@ -1,10 +1,8 @@
 import discord, { Message } from 'discord.js';
 
-import { getCommands } from './commands';
-import { Find } from './commands/find';
 import { CommandError } from './error';
-import { usage, success } from './messageEmbeds';
-const find = new Find();
+import { usage, success, error } from './messageEmbeds';
+import { Find, commands } from './commands';
 
 import { Command, Server, User } from './types';
 
@@ -13,28 +11,25 @@ client.on('ready', async () => {
   console.log('up');
 });
 client.on('message', async (message: Message) => {
-  if (message.author.bot) return;
-  const { content, author, guild } = message;
-  const user: User = {
-    id: author.id,
-  };
   try {
+    if (message.author.bot) return;
+    const { content, author, guild } = message;
     if (!guild) {
-      throw new Error();
+      return message.channel.send(error());
     }
+    const user: User = {
+      id: author.id,
+    };
     const server: Server = {
       id: guild.id,
     };
+
     const prefix = '--';
     if (content.slice(0, prefix.length) === prefix) {
-      console.log('command ' + content);
       const commandName = content.slice(prefix.length).split(' ', 1)[0];
-      const command: Command | undefined =
-        getCommands().get(commandName) ||
-        [...getCommands().values()].find((c) =>
-          c.aliases.includes(commandName)
-        );
-      if (command) {
+      const command = getOrDefault(commandName);
+
+      if (command.name) {
         const body = content.slice(prefix.length + commandName.length).trim();
         const { result, msg } = await command.execute({ body, user, server });
         message.channel.send(msg);
@@ -56,9 +51,20 @@ client.on('message', async (message: Message) => {
         message.channel.send(usage(user, commandError.message));
       }
     }
-    console.log('went to here');
-    console.log(JSON.stringify(err));
   }
 });
+
+const toContext = (message: Message): Context => {
+  return {
+    user: {
+      id: message.author.id,
+    },
+  };
+};
+const get = (commandName: string): Command | undefined => {
+  return commands.find(
+    (cmd) => cmd.name === commandName || cmd.aliases.includes(commandName)
+  );
+};
 
 client.login(process.env.TOKEN);

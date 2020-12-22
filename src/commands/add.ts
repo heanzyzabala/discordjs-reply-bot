@@ -1,42 +1,46 @@
 import { Reply } from '../entities';
 import { Command, Context } from '../types';
 import { CommandError } from '../error';
-
-export class Add implements Command {
+class Add implements Command {
   readonly name: string = 'add';
   readonly aliases: string[] = ['a'];
   readonly usage: string = '"<key>" "<value>" --includes? --ignoreCase?';
   readonly options: string[] = ['--includes', '--ignoreCase'];
 
-  async execute(context: Context): Promise<any> | never {
+  async execute({ body, user, server }: Context): Promise<any> | never {
     console.log('adding');
-    const { body } = context;
     const matches = body.match(
       '^"([^"]+)" "([^"]+)"\\s*(--includes)?\\s*(--ignoreCase)?$'
     );
     if (!matches) throw new CommandError('E01', this.usage);
     try {
-      const result = await this.toReply(context, matches).save();
+      const key = matches[1];
+      const value = matches[2];
+      const serverId = server.id;
+      const reply = await Reply.findOne({ key, value, serverId });
+      const options = '';
+      if (!reply) {
+        const result = await new Reply(key, value, options, serverId).save();
+        return {
+          result,
+          msg: 'Added a reply',
+        };
+      }
+      const result = await new Reply(
+        key,
+        value,
+        options,
+        serverId,
+        reply.id
+      ).save();
       return {
         result,
-        msg: 'Added a reply!',
+        msg: 'Updated a reply',
       };
     } catch (err) {
+      console.log(JSON.stringify(err));
       throw new CommandError('E00', 'Generic error');
     }
   }
-
-  private toReply(context: Context, matches: RegExpMatchArray): Reply {
-    const key = matches[1];
-    let value = matches[2];
-    const options = [];
-    if (matches[3]) {
-      options.push(matches[3]);
-    }
-    if (matches[4]) {
-      options.push(matches[4]);
-    }
-    return new Reply(key, value, options.toString(), context.server.id);
-  }
 }
-export default Add;
+export default new Add();

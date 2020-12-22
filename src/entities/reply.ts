@@ -1,19 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  Unique,
+} from 'typeorm';
 
 @Entity({ name: 'replies' })
+@Unique(['key', 'guildId'])
 export class Reply extends BaseEntity {
-  constructor(key: string, value: string, options: string, serverId: string) {
+  constructor(
+    key: string,
+    value: string,
+    options: string,
+    guildId: string,
+    id?: string
+  ) {
     super();
+    if (id) this.id = id;
     this.key = key;
     this.value = value;
     this.options = options;
-    this.serverId = serverId;
+    this.guildId = guildId;
   }
 
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column({ unique: true })
+  @Column()
   key: string;
 
   @Column()
@@ -22,6 +36,6 @@ export class Reply extends BaseEntity {
   @Column()
   options: string;
 
-  @Column({ unique: true })
-  serverId: string;
+  @Column()
+  guildId: string;
 }

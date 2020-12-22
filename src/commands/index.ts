@@ -1,10 +1,6 @@
-import { Command } from 'src/types';
 import Add from './add';
+import Find from './find';
+import List from './list';
 
-const commands = new Map<string, Command>();
-const add = new Add();
-commands.set(add.name, add);
-
-export const getCommands = () => {
-  return commands;
-};
+export const commands: Command[] = [Add, Find, List];
+export { Find };

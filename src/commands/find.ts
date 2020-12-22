@@ -2,7 +2,7 @@ import { Reply } from '../entities';
 import { Command, Context } from '../types';
 import { CommandError } from '../error';
 
-export class Find implements Command {
+class Find implements Command {
   readonly name: string = '';
   readonly aliases: string[] = [];
   readonly usage: string = '';
@@ -23,3 +23,4 @@ export class Find implements Command {
     }
   }
 }
+export default new Find()
