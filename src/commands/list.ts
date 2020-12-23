@@ -1,16 +1,20 @@
-import { Command, Context } from "src/types";
+import { Message } from 'discord.js';
+import { Command, Context } from 'src/types';
 import { Reply } from '../entities';
+import * as embeds from '../messageEmbeds';
 
 class List implements Command {
-    name: string = 'list';
-    aliases: string[] = ['l'];
-    usage: string = '--list';
-    options: string[] = [];
-    async execute({ server }: Context): Promise<any> {
-        const replies: Reply[] = await Reply.find({ serverId: server.id })
-        return {
-            replies,
-        }
-    }
+  name: string = 'list';
+  aliases: string[] = ['l'];
+  usage: string = '--list';
+  options: string[] = [];
+  async execute(
+    { user, guild }: Context,
+    body: string,
+    message: Message
+  ): Promise<void> {
+    const replies: Reply[] = await Reply.find({ guildId: guild.id });
+    message.channel.send(embeds.list(user, replies));
+  }
 }
-export default new List()
+export default new List();
