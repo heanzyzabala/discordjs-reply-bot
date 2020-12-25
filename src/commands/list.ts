@@ -10,7 +10,7 @@ class List implements Command {
   options: string[] = [];
   async execute(
     { user, guild }: Context,
-    body: string,
+    _body: string,
     message: Message
   ): Promise<void> {
     const replies: Reply[] = await Reply.find({ guildId: guild.id });

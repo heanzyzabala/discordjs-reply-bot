@@ -7,4 +7,13 @@ export class Guild {
 
   @Column()
   guildId: string;
+
+  @Column({ default: '--' })
+  prefix: string;
+
+  @Column({ default: 15 })
+  maxReplies: number;
+
+  @Column({ default: 300 })
+  maxChars: number;
 }

@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'replies' })
-@Unique(['key', 'guildId'])
+@Unique(['key', 'value', 'guildId'])
 export class Reply extends BaseEntity {
   constructor(
     key: string,

@@ -28,6 +28,7 @@ client.on('message', async (message: Message) => {
       return await Find.execute(context, context.content, message);
     }
   } catch (err) {
+    console.log(err);
     message.channel.send(error());
   }
 });
@@ -37,6 +38,7 @@ const toContext = (message: Message): Context => {
     content: message.content,
     user: {
       id: message.author.id,
+      username: message.author.username + '#' + message.author.discriminator,
     },
     guild: {
       id: message.guild?.id || 'NO_GUILD_ID',

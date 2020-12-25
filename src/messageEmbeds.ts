@@ -2,18 +2,18 @@ import { MessageEmbed } from 'discord.js';
 import { Reply } from './entities';
 import { User } from './types';
 
-export const usage = (user: User, message: string): MessageEmbed => {
+export const usage = ({ username }: User, message: string): MessageEmbed => {
   return new MessageEmbed()
     .setColor('#cddc39')
-    .setAuthor(user)
+    .setAuthor(username)
     .setTitle('Invalid command')
     .addField('Usage:', '```' + message + '```');
 };
 
-export const success = (user: User, message: string): MessageEmbed => {
+export const success = ({ username }: User, message: string): MessageEmbed => {
   return new MessageEmbed()
     .setColor('#4caf50')
-    .setAuthor(user)
+    .setAuthor(username)
     .setTitle(message);
 };
 
@@ -26,23 +26,24 @@ export const error = (): MessageEmbed => {
     );
 };
 
-export const list = (user: User, replies: Reply[]): MessageEmbed => {
+export const list = ({ username }: User, replies: Reply[]): MessageEmbed => {
   const message = new MessageEmbed()
     .setColor('#4caf50')
-    .setAuthor(user)
+    .setAuthor(username)
     .setTitle('Replies:');
 
-  if (!replies) {
+  if (!replies.length) {
     message.setDescription('There are none added yet.');
     return message;
   }
 
-  replies.forEach((reply, index) => {
+  replies.forEach(({ key, value }, index) => {
     message.addField(
-      `[${index}]`,
-      `key: ${reply.key}` +
-        `value: ${reply.value}` +
-        `options: ${reply.options}`
+      '# ' + index,
+      `\`\`\`
+key:    ${key}
+value:  ${value}
+\`\`\``
     );
   });
   return message;

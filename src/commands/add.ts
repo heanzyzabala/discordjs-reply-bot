@@ -24,7 +24,7 @@ class Add implements Command {
     const key = matches[1];
     const value = matches[2];
     const guildId = guild.id;
-    const reply = await Reply.findOne({ key, value, guildId });
+    const reply = await Reply.findOne({ key, guildId });
     const options = '';
     if (!reply) {
       await new Reply(key, value, options, guildId).save();
