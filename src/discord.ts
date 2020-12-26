@@ -3,6 +3,7 @@ import discord, { Message } from 'discord.js';
 import { error } from './messageEmbeds';
 import { Command, Context } from './types';
 import { commands, Find } from './commands';
+import { Guild } from './entities';
 
 const client = new discord.Client();
 client.on('ready', async () => {
@@ -15,8 +16,22 @@ client.on('message', async (message: Message) => {
     if (!discordGuild) {
       return message.channel.send(error());
     }
-    const context = toContext(message);
-    const prefix = '--';
+    let guild = await Guild.findOne({ guildId: context.guild.id });
+    if (!guild) {
+      guild = await new Guild(context.guild.id).save();
+    }
+    const context = {
+      id: message.id,
+      content: message.content,
+      user: {
+        id: message.author.id,
+        username: message.author.username + '#' + message.author.discriminator,
+      },
+      guild: {
+        id: message.guild?.id || 'NO_GUILD_ID',
+      },
+    };
+    const prefix = guild.prefix;
     if (content.slice(0, prefix.length) === prefix) {
       const commandName = content.slice(prefix.length).split(' ', 1)[0];
       const command = get(commandName);
@@ -32,19 +47,6 @@ client.on('message', async (message: Message) => {
     message.channel.send(error());
   }
 });
-const toContext = (message: Message): Context => {
-  return {
-    id: message.id,
-    content: message.content,
-    user: {
-      id: message.author.id,
-      username: message.author.username + '#' + message.author.discriminator,
-    },
-    guild: {
-      id: message.guild?.id || 'NO_GUILD_ID',
-    },
-  };
-};
 const get = (commandName: string): Command | undefined => {
   return commands.find(
     (cmd) => cmd.name === commandName || cmd.aliases.includes(commandName)

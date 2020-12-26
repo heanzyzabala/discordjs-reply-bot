@@ -21,15 +21,19 @@ export interface Option {
 export interface Context {
   id: string;
   content: string;
-  user: User;
-  guild: Guild;
+  user: {
+    id: string;
+  };
+  guild: {
+    id: string;
+    guildId: string;
+    prefix: string;
+    maxReplies?: number;
+    maxChars?: number;
+  };
 }
 
 export interface User {
   id: string;
   username: string;
-}
-
-export interface Guild {
-  id: string;
 }
