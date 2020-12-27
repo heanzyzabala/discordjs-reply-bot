@@ -13,7 +13,7 @@ export class Reply extends BaseEntity {
     key: string,
     value: string,
     options: string,
-    guildId: string,
+    guildId: number,
     id?: string
   ) {
     super();
@@ -37,5 +37,5 @@ export class Reply extends BaseEntity {
   options: string;
 
   @Column()
-  guildId: string;
+  guildId: number;
 }

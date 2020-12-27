@@ -13,13 +13,15 @@ export class Guild extends BaseEntity {
     guildId: string,
     prefix: string,
     maxReplies: number,
-    maxChars: number
+    maxChars: number,
+    id?: number
   ) {
     super();
     this.guildId = guildId;
     this.prefix = prefix;
     this.maxReplies = maxReplies;
     this.maxChars = maxChars;
+    if (id) this.id = id;
   }
 
   @PrimaryGeneratedColumn()
@@ -34,6 +36,6 @@ export class Guild extends BaseEntity {
   @Column({ default: 15 })
   maxReplies: number;
 
-  @Column({ default: 300 })
+  @Column({ default: 350 })
   maxChars: number;
 }

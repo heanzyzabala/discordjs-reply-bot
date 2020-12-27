@@ -1,6 +1,6 @@
+import { Message } from 'discord.js';
 import { Reply } from '../entities';
 import { Command, Context } from '../types';
-import { Message } from 'discord.js';
 import * as embeds from '../messageEmbeds';
 class Add implements Command {
   readonly name: string = 'add';

@@ -23,13 +23,14 @@ export interface Context {
   content: string;
   user: {
     id: string;
+    username: string;
   };
   guild: {
-    id: string;
+    id: number;
     guildId: string;
     prefix: string;
-    maxReplies?: number;
-    maxChars?: number;
+    maxReplies: number;
+    maxChars: number;
   };
 }
 

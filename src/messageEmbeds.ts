@@ -48,3 +48,11 @@ value:  ${value}
   });
   return message;
 };
+
+export const help = ({ username }: User): MessageEmbed => {
+  return new MessageEmbed()
+    .setColor('#4caf50')
+    .setAuthor(username)
+    .setTitle('Available commands:')
+    .addField('```add```', '```hey```');
+};
