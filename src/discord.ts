@@ -9,6 +9,10 @@ const client = new discord.Client();
 client.on('ready', async () => {
   console.log('up');
 });
+client.on('error', (err) => {
+  console.log(err);
+});
+
 client.on(
   'message',
   async (message: Message): Promise<void | discord.Message> => {
@@ -35,7 +39,7 @@ client.on(
           guildId: guild.guildId,
           prefix: guild.prefix,
           maxReplies: guild.maxReplies,
-          maxChars: guild.maxChars,
+          maxLength: guild.maxLength,
         },
       };
       const prefix = guild.prefix;

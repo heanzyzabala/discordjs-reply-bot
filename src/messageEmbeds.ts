@@ -26,6 +26,18 @@ export const error = (): MessageEmbed => {
     );
 };
 
+export const constraint = (
+  { username }: User,
+  title: string,
+  message: string
+): MessageEmbed => {
+  return new MessageEmbed()
+    .setColor('#f44336')
+    .setAuthor(username)
+    .setTitle(title)
+    .setDescription(message);
+};
+
 export const list = ({ username }: User, replies: Reply[]): MessageEmbed => {
   const message = new MessageEmbed()
     .setColor('#4caf50')

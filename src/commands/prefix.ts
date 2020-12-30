@@ -19,8 +19,8 @@ class Prefix implements Command {
       message.channel.send(embeds.usage(user, this.usage));
       return;
     }
-    const { guildId, maxReplies, maxChars, id } = guild;
-    await new Guild(guildId, matches[0], maxReplies, maxChars, id).save();
+    const { guildId, maxReplies, maxLength, id } = guild;
+    await new Guild(guildId, matches[0], maxReplies, maxLength, id).save();
     message.channel.send(embeds.success(user, this.onSuccess));
   }
 }

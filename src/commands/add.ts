@@ -23,6 +23,16 @@ class Add implements Command {
     }
     const key = matches[1];
     const value = matches[2];
+    if (key.length >= guild.maxLength || value.length >= guild.maxLength) {
+      message.channel.send(
+        embeds.constraint(
+          user,
+          'Invalid length:',
+          `Key and value should be less than ${guild.maxLength} characters.`
+        )
+      );
+      return;
+    }
     const guildId = guild.id;
     const reply = await Reply.findOne({ key, guildId });
     const options = '';

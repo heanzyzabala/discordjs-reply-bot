@@ -30,7 +30,7 @@ export interface Context {
     guildId: string;
     prefix: string;
     maxReplies: number;
-    maxChars: number;
+    maxLength: number;
   };
 }
 
