@@ -7,8 +7,6 @@ class Add implements Command {
   readonly aliases: string[] = ['a'];
   readonly usage: string = '"<key>" "<value>" --includes? --ignoreCase?';
   readonly options: string[] = ['--includes', '--ignoreCase'];
-  readonly onSuccess = 'You added a reply!';
-  readonly onUpdate = 'You updated a reply!';
   async execute(
     { guild, user }: Context,
     body: string,
@@ -23,26 +21,37 @@ class Add implements Command {
     }
     const key = matches[1];
     const value = matches[2];
-    if (key.length >= guild.maxLength || value.length >= guild.maxLength) {
+    if (key.length > guild.maxLength || value.length > guild.maxLength) {
       message.channel.send(
         embeds.constraint(
           user,
-          'Invalid length:',
-          `Key and value should be less than ${guild.maxLength} characters.`
+          'Invalid length',
+          `Key and value should be less than or equal to ${guild.maxLength} characters.`
         )
       );
       return;
     }
     const guildId = guild.id;
-    const reply = await Reply.findOne({ key, guildId });
+    const replies = await Reply.find({ guildId });
+    if (replies.length >= guild.maxReplies) {
+      message.channel.send(
+        embeds.constraint(
+          user,
+          'Max replies reached',
+          `You can only add up to ${guild.maxReplies} replies.`
+        )
+      );
+      return;
+    }
+    const reply = replies.find((r) => r.key === key);
     const options = '';
     if (!reply) {
       await new Reply(key, value, options, guildId).save();
-      message.channel.send(embeds.success(user, this.onSuccess));
+      message.channel.send(embeds.success(user, 'You added a reply.'));
       return;
     }
     await new Reply(key, value, options, guildId, reply.id).save();
-    message.channel.send(embeds.success(user, this.onUpdate));
+    message.channel.send(embeds.success(user, 'You updated a reply.'));
     return;
   }
 }

@@ -8,7 +8,6 @@ class Prefix implements Command {
   readonly aliases: string[] = ['p'];
   readonly usage: string = '<prefix>';
   readonly options: string[] = [];
-  readonly onSuccess = 'You updated the prefix!';
   async execute(
     { user, guild }: Context,
     body: string,
@@ -21,7 +20,9 @@ class Prefix implements Command {
     }
     const { guildId, maxReplies, maxLength, id } = guild;
     await new Guild(guildId, matches[0], maxReplies, maxLength, id).save();
-    message.channel.send(embeds.success(user, this.onSuccess));
+    message.channel.send(
+      embeds.success(user, `You set the prefix to '${matches[0]}'`)
+    );
   }
 }
 export default new Prefix();
