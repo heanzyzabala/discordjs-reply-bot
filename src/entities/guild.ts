@@ -14,6 +14,7 @@ export class Guild extends BaseEntity {
     prefix: string,
     maxReplies: number,
     maxLength: number,
+    allowedRole: string,
     id?: number
   ) {
     super();
@@ -21,6 +22,7 @@ export class Guild extends BaseEntity {
     this.prefix = prefix;
     this.maxReplies = maxReplies;
     this.maxLength = maxLength;
+    this.allowedRole = allowedRole;
     if (id) this.id = id;
   }
 
@@ -38,4 +40,7 @@ export class Guild extends BaseEntity {
 
   @Column()
   maxLength: number;
+
+  @Column()
+  allowedRole: string;
 }

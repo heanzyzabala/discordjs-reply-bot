@@ -18,10 +18,10 @@ class Role implements Command {
       message.channel.send(embeds.usage(user, this.usage));
       return;
     }
-    const { guildId, maxReplies, maxLength, id } = guild;
-    await new Guild(guildId, matches[0], maxReplies, maxLength, id).save();
+    const { guildId, maxReplies, maxLength, prefix, id } = guild;
+    await new Guild(guildId, prefix, maxReplies, maxLength, matches[0], id).save();
     message.channel.send(
-      embeds.success(user, `You set the prefix to '${matches[0]}'`)
+      embeds.success(user, `You set the role to '${matches[0]}'`)
     );
   }
 }

@@ -31,6 +31,7 @@ export interface Context {
     prefix: string;
     maxReplies: number;
     maxLength: number;
+    allowedRole: string,
   };
 }
 
