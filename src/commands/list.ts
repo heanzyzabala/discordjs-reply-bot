@@ -8,13 +8,9 @@ class List implements Command {
   aliases: string[] = ['l'];
   usage: string = '--list';
   options: string[] = [];
-  async execute(
-    { user, guild }: Context,
-    _body: string,
-    message: Message
-  ): Promise<void> {
+  async execute({ user, guild }: Context, _body: string, { channel }: Message): Promise<void> {
     const replies: Reply[] = await Reply.find({ guildId: guild.id });
-    message.channel.send(embeds.list(user, replies));
+    channel.send(embeds.list(user, replies));
   }
 }
 export default new List();
