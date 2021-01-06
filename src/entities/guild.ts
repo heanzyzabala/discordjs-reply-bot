@@ -1,22 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  BaseEntity,
-  Unique,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, Unique } from 'typeorm';
 
 @Entity({ name: 'guilds' })
 @Unique(['guildId'])
 export class Guild extends BaseEntity {
-  constructor(
-    guildId: string,
-    prefix: string,
-    maxReplies: number,
-    maxLength: number,
-    allowedRole: string,
-    id?: number
-  ) {
+	// prettier-ignore
+	constructor(guildId: string, prefix: string, maxReplies: number, maxLength: number, allowedRole: string, id?: number) {
     super();
     this.guildId = guildId;
     this.prefix = prefix;
@@ -26,21 +14,21 @@ export class Guild extends BaseEntity {
     if (id) this.id = id;
   }
 
-  @PrimaryGeneratedColumn()
-  id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column()
-  guildId: string;
+	@Column()
+	guildId: string;
 
-  @Column()
-  prefix: string;
+	@Column()
+	prefix: string;
 
-  @Column()
-  maxReplies: number;
+	@Column()
+	maxReplies: number;
 
-  @Column()
-  maxLength: number;
+	@Column()
+	maxLength: number;
 
-  @Column()
-  allowedRole: string;
+	@Column()
+	allowedRole: string;
 }
