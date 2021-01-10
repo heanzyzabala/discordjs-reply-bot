@@ -1,73 +1,76 @@
-import discord, { Message } from 'discord.js';
+import { readdir } from 'fs';
+import Discord, { Message } from 'discord.js';
 
-import { error, constraint } from './messageEmbeds';
 import { Command, Context } from './types';
-import { commands, Find } from './commands';
 import { Guild } from './entities';
+import { constraint } from './messageEmbeds';
+import Find from './commands/find';
 
-const client = new discord.Client();
+const client = new Discord.Client();
+const commands = new Discord.Collection<string, Command>();
+
 client.on('ready', async () => {
-	console.log('up');
+	readdir(__dirname + '/commands/', (err, dirs) => {
+		if (err) throw err;
+		// prettier-ignore
+		dirs.filter((dir) => dir.endsWith('add.js')).forEach(async (d) => {
+            const path = __dirname + '/commands/' + d
+            const command: Command = await import(path)
+            commands.set(command.name, command);
+        });
+	});
 });
+
 client.on('error', (err) => {
 	console.log(err);
 });
 
 client.on('message', async (message: Message) => {
-	try {
-		if (message.author.bot) return;
-		const { content, guild: discordGuild, member } = message;
-		if (!discordGuild || !member) {
-			return message.channel.send(error());
-		}
-		let guild = await Guild.findOne({ guildId: discordGuild.id });
-		if (!guild) {
-			guild = await new Guild(discordGuild.id, '--', 15, 350, 'ALL').save();
-		}
-		const context: Context = {
-			id: message.id,
-			content: message.content,
-			user: {
-				id: message.author.id,
-				username: message.author.tag,
-			},
-			guild: {
-				id: guild.id,
-				guildId: guild.guildId,
-				prefix: guild.prefix,
-				maxReplies: guild.maxReplies,
-				maxLength: guild.maxLength,
-				allowedRole: guild.allowedRole,
-			},
-		};
-		const prefix = guild.prefix;
-		if (content.slice(0, prefix.length) === prefix) {
-			const commandName = content.slice(prefix.length).split(' ', 1)[0];
-			const command = get(commandName);
-			if (command) {
-				const role = context.guild.allowedRole;
-				if (role === 'ALL' || member.roles.cache.find((r) => r.name === role)) {
-					const body = content.slice(prefix.length + commandName.length).trim();
-					return await command.execute(context, body, message);
-				} else {
-					message.channel.send(
-						constraint(
-							context.user,
-							'Invalid role',
-							"You don't have permission to perform this action.",
-						),
-					);
-				}
-			}
-		} else {
-			return await Find.execute(context, context.content, message);
-		}
-	} catch (err) {
-		console.log(err);
-		message.channel.send(error());
+	if (message.author.bot) return;
+	if (!message.guild) return;
+
+	let guild = await Guild.findOne({ guildId: message.guild.id });
+	if (!guild) {
+		guild = await new Guild(message.guild.id, '--', 15, 350, 'ALL').save();
 	}
+	const context: Context = {
+		id: message.id,
+		content: message.content,
+		user: {
+			id: message.author.id,
+			username: message.author.tag,
+		},
+		guild: {
+			id: guild.id,
+			guildId: guild.guildId,
+			prefix: guild.prefix,
+			maxReplies: guild.maxReplies,
+			maxLength: guild.maxLength,
+			allowedRole: guild.allowedRole,
+		},
+	};
+	const { prefix, allowedRole } = guild;
+	const { content } = message;
+	if (content.startsWith(prefix)) {
+		const command = content.slice(prefix.length).split(' ')[0];
+		const cmd = getCommand(command);
+		if (cmd) {
+			// prettier-ignore
+			if (allowedRole === 'ALL' || message.member?.roles.cache.find((role) => role.name === allowedRole)) {
+                const body = content.slice(prefix.length + command.length);
+                return await cmd.execute(context, body, message);
+            }
+			// prettier-ignore
+			message.channel.send(constraint('sdf', 'Invalid role', "You're not allowed to perform this action"));
+		}
+		return;
+	}
+	await Find.execute(context, content, message);
 });
-const get = (commandName: string): Command | undefined => {
-	return commands.find((c) => c.name === commandName || c.aliases.includes(commandName));
+
+const getCommand = (command: string | undefined): Command | undefined => {
+	if (!command) return;
+	return commands.get(command) || commands.array().find((cmd) => cmd.aliases.includes(command));
 };
+
 client.login(process.env.TOKEN);

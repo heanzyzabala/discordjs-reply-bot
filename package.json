@@ -2,7 +2,7 @@
   "name": "discord-reply-bot",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"nodemon dist/main.js\""
   },

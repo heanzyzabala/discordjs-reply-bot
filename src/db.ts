@@ -5,6 +5,6 @@ import { createConnection } from 'typeorm';
 	try {
 		await createConnection();
 	} catch (err) {
-		console.log(JSON.stringify(err));
+		console.log('error ' + JSON.stringify(err));
 	}
 })();

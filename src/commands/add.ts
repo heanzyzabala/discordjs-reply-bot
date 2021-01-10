@@ -18,7 +18,7 @@ class Add implements Command {
 		const value = matches[2];
 		if (key.length > guild.maxLength || value.length > guild.maxLength) {
 			// prettier-ignore
-			channel.send(embeds.constraint(user, 'Invalid length', `Key and value should be less than or equal to ${guild.maxLength} characters.`));
+			channel.send(embeds.constraint(user.username, 'Invalid length', `Key and value should be less than or equal to ${guild.maxLength} characters.`));
 			return;
 		}
 		const guildId = guild.id;
@@ -26,7 +26,7 @@ class Add implements Command {
 		if (replies.length >= guild.maxReplies) {
 			channel.send(
 				embeds.constraint(
-					user,
+					user.username,
 					'Max replies reached',
 					`You can only add up to ${guild.maxReplies} replies.`,
 				),
