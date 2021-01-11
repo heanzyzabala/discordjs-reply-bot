@@ -10,7 +10,7 @@ class Find implements Command {
 	async execute({ guild }: Context, body: string, message: Message): Promise<void> {
 		const replies: Reply[] = await Reply.find({ guildId: guild.id });
 		// prettier-ignore
-		const reply = replies.find((r) => { r.key === body });
+		const reply = replies.find((r) => r.key === body);
 		if (reply) {
 			message.reply(reply.value);
 			return;

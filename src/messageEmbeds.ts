@@ -54,5 +54,11 @@ export const help = ({ username }: User): MessageEmbed => {
 		.setColor('#4caf50')
 		.setAuthor(username)
 		.setTitle('Available commands:')
-		.addField('```add```', '```hey```');
+		.addFields([
+			{ name: 'Add', value: '```--help add```' },
+			{ name: 'List', value: '```--help list```' },
+			{ name: 'Prefix', value: '```--help prefix```' },
+			{ name: 'Role', value: '```--help role```' },
+			{ name: 'Help', value: '```--help```' },
+		]);
 };

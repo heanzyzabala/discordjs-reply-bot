@@ -10,15 +10,17 @@ const client = new Discord.Client();
 const commands = new Discord.Collection<string, Command>();
 
 client.on('ready', async () => {
+	console.log('Loading commands ...');
 	readdir(__dirname + '/commands/', (err, dirs) => {
 		if (err) throw err;
 		// prettier-ignore
-		dirs.filter((dir) => dir.endsWith('add.js')).forEach(async (d) => {
-            const path = __dirname + '/commands/' + d
-            const command: Command = await import(path)
-            commands.set(command.name, command);
+		dirs.filter((dir) => dir.endsWith('.js')).forEach(async (d) => {
+			const path = __dirname + '/commands/' + d
+			const command = await import(path);
+            commands.set(command.default.name, command.default);
         });
 	});
+	console.log('up');
 });
 
 client.on('error', (err) => {
@@ -57,11 +59,11 @@ client.on('message', async (message: Message) => {
 		if (cmd) {
 			// prettier-ignore
 			if (allowedRole === 'ALL' || message.member?.roles.cache.find((role) => role.name === allowedRole)) {
-                const body = content.slice(prefix.length + command.length);
+				const body = content.slice(prefix.length + command.length).trim();
                 return await cmd.execute(context, body, message);
             }
 			// prettier-ignore
-			message.channel.send(constraint('sdf', 'Invalid role', "You're not allowed to perform this action"));
+			message.channel.send(constraint(context.user.username, 'Invalid role', "You're not allowed to perform this action"));
 		}
 		return;
 	}
