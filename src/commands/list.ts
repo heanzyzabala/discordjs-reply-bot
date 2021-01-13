@@ -20,10 +20,26 @@ class List implements Command {
 			return;
 		}
 
-		replies.forEach(({ key, value }, index) => {
-			const emoji = this.toEmoji(index);
-			embed.addField(emoji + '```' + key + '```', '```' + value + '```');
-		});
+		let st = ''
+		for (let i = 0; i < replies.length; i++) {
+			const { key, value } = replies[i];
+			const emoji = this.toEmoji(i);
+			let s = ''
+			s += emoji + '\n';
+			s += '```' + '\n';
+			s += '>KEY: \n' + key + '\n\n';
+			s += '>VALUE: \n' + value + '\n';
+			s += '```\n';
+
+			if ((st + s).length > 2000) {
+				break;
+			}
+			st += s
+			// embed.addField(emoji + '```' + key + '```', '```' + value + '```');
+		}
+		console.log(st.length)
+		// channel.send(st)
+		embed.setDescription(st)
 		channel.send(embed);
 	}
 
