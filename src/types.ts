@@ -1,9 +1,4 @@
 import { Message } from 'discord.js';
-
-export interface Event {
-	name: string;
-	execute(args: any): any;
-}
 export interface Command {
 	name: string;
 	aliases: string[];
@@ -11,17 +6,6 @@ export interface Command {
 	options: string[];
 	execute(context: Context, body: string, message: Message): Promise<void>;
 }
-export interface Error {
-	id: string;
-	message: string;
-}
-
-export interface Option {
-	name: string;
-	key: string;
-	required: boolean;
-}
-
 export interface Context {
 	id: string;
 	content: string;
