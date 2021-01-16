@@ -30,6 +30,25 @@ try {
   client.on('ready', () => Logger.info('UP'));
 
   client.on('message', async (message) => {
+    if (message.author.tag === 'Twainstar#6300' && message.content === 'sendUpdate') {
+      const guilds = client.guilds.cache;
+      Logger.info('Guild size ' + guilds.size)
+      guilds.forEach((guild) => {
+        const owner = client.users.cache.get(guild.ownerID);
+        const embed = new Discord.MessageEmbed()
+          .setAuthor(
+            'ReplyBot',
+            'https://images.discordapp.net/avatars/693108033601011762/09aab0f91141266cd130fee1daa67886.png?size=512',
+          )
+          .setTitle(':loudspeaker: Quick Update!')
+          .setColor('#0099ff')
+          .setDescription(
+            `Hi there. I just want to let you know that I'll be upgraded soon. This includes more commands, optimizations and hopefully a better support. \nThank you for supporting this bot!`,
+          )
+          .addField('\u200B', 'Cheers! \nTwainstar#6300');
+        owner.send(embed);
+      });
+    }
     if (message.author.bot) {
       return;
     }
