@@ -1,5 +1,5 @@
 import { readdir } from 'fs';
-import Discord, { Message } from 'discord.js';
+import Discord, { PresenceData, Message, MessageReaction } from 'discord.js';
 
 import { Command, Context } from './types';
 import { Guild } from './entities';
@@ -21,6 +21,13 @@ client.on('ready', async () => {
         });
 	});
 	console.log('up');
+	client.user?.setPresence({
+		status: 'online',
+		activity: {
+			name: `with ${client.guilds.cache.size} servers`,
+			type: 'PLAYING'
+		}
+	});
 });
 
 client.on('error', (err) => {
@@ -68,6 +75,10 @@ client.on('message', async (message: Message) => {
 		return;
 	}
 	await Find.execute(context, content, message);
+});
+
+client.on('messageReactionAdd', (reaction: MessageReaction) => {
+	console.log(reaction);
 });
 
 const getCommand = (command: string | undefined): Command | undefined => {
