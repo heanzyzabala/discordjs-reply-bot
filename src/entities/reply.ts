@@ -3,12 +3,12 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, Unique } from 'type
 @Entity({ name: 'replies' })
 @Unique(['key', 'value', 'guildId'])
 export class Reply extends BaseEntity {
-	constructor(key: string, value: string, options: string, guildId: number, id?: string) {
+	constructor(key: string, value: string, matchers: string[], guildId: number, id?: string) {
 		super();
 		if (id) this.id = id;
 		this.key = key;
 		this.value = value;
-		this.options = options;
+		this.matchers = matchers;
 		this.guildId = guildId;
 	}
 
@@ -21,8 +21,8 @@ export class Reply extends BaseEntity {
 	@Column()
 	value: string;
 
-	@Column()
-	options: string;
+	@Column('text', { array: true })
+	matchers: string[];
 
 	@Column()
 	guildId: number;

@@ -2,4 +2,5 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import './db';
-import './discord';
+import ReplyBotClient from './replyBotClient';
+new ReplyBotClient();

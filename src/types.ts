@@ -1,11 +1,3 @@
-import { Message } from 'discord.js';
-export interface Command {
-	name: string;
-	aliases: string[];
-	usage: string;
-	options: string[];
-	execute(context: Context, body: string, message: Message): Promise<void>;
-}
 export interface Context {
 	id: string;
 	content: string;
