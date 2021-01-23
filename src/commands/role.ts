@@ -1,9 +1,10 @@
 import { Message } from 'discord.js';
-import { Command, Context } from '../types';
+import { Context } from '../types';
 import { Guild } from '../entities';
 import * as embeds from '../messageEmbeds';
+import { Command } from 'src/classes';
 
-class Role implements Command {
+export default class extends Command {
 	name: string = 'role';
 	aliases: string[] = ['r'];
 	usage: string = '<role>';
@@ -19,4 +20,3 @@ class Role implements Command {
 		channel.send(embeds.success(user, `You set the role to '${matches[0]}'`));
 	}
 }
-export default new Role();

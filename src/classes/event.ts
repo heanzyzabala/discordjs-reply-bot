@@ -10,6 +10,6 @@ export default class Event {
 	}
 
 	execute(..._args: any[]) {
-		throw new Error('Unsupported operation.');
+		throw new Error('Unimplemented function.');
 	}
 }

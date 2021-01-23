@@ -1,7 +1,8 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command, Context } from '../types';
+import { Command } from 'src/classes';
+import { Context } from '../types';
 
-class Help implements Command {
+export default class extends Command {
 	name: string = 'help';
 	aliases: string[] = ['h'];
 	usage: string = '--help';
@@ -28,4 +29,3 @@ class Help implements Command {
 		channel.send(embed);
 	}
 }
-export default new Help();

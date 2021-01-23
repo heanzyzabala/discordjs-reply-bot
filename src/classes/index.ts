@@ -1,2 +1,3 @@
 import Event from './event';
-export { Event };
+import Command from './command';
+export { Event, Command };

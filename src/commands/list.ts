@@ -1,22 +1,15 @@
 import { CollectorFilter, Message, MessageEmbed } from 'discord.js';
-import { Command, Context } from 'src/types';
+import { Command } from 'src/classes';
+import { Context } from 'src/types';
 import { Reply } from '../entities';
 
-class List implements Command {
+export default class extends Command {
 	name: string = 'list';
 	aliases: string[] = ['l'];
 	usage: string = '--list';
 	options: string[] = [];
 	async execute({ user, guild }: Context, _body: string, { channel }: Message): Promise<void> {
 		const replies = await Reply.find({ guildId: guild.id });
-		if (!replies.length) {
-			const embed = new MessageEmbed()
-				.setColor('#4caf50')
-				.setAuthor(user.username)
-				.setDescription('There are none added yet.');
-			channel.send(embed);
-			return;
-		}
 		const pages: any[] = [];
 		let page = '';
 		for (let i = 0; i < replies.length; i++) {
@@ -34,7 +27,6 @@ class List implements Command {
 				page = '';
 			}
 		}
-
 		let currentPage = 0;
 		const afterMessage = await channel.send(this.getEmbed(pages, currentPage));
 		const nextFilter: CollectorFilter = (reaction, u) =>
@@ -64,8 +56,12 @@ class List implements Command {
 	}
 
 	private getEmbed(pages: string[], page: number): MessageEmbed {
-		return new MessageEmbed()
-			.setColor('#4caf50')
+		const embed = new MessageEmbed().setColor('#4caf50');
+		if (pages.length == 0) {
+			embed.setDescription('There are none added yet.');
+			return embed;
+		}
+		return embed
 			.setDescription(pages[page])
 			.setFooter(`Pages: ${page + 1}/${pages.length} Length: ${pages[page].length}`);
 	}
@@ -90,4 +86,3 @@ class List implements Command {
 		return (emoji += numEmojis[n % 10]);
 	}
 }
-export default new List();

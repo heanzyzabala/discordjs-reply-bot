@@ -1,9 +1,10 @@
 import { Message } from 'discord.js';
-import { Command, Context } from '../types';
+import { Context } from '../types';
 import { Guild } from '../entities';
 import * as embeds from '../messageEmbeds';
+import { Command } from 'src/classes';
 
-class Prefix implements Command {
+export default class extends Command {
 	name: string = 'prefix';
 	aliases: string[] = ['p'];
 	usage: string = '<prefix>';
@@ -19,4 +20,3 @@ class Prefix implements Command {
 		channel.send(embeds.success(user, `You set the prefix to '${matches[0]}'`));
 	}
 }
-export default new Prefix();
