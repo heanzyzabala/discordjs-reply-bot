@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { Context } from '../types';
 import { Reply } from '../entities';
 import * as embeds from '../messageEmbeds';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 
 export default class extends Command {
 	name: string = 'remove';

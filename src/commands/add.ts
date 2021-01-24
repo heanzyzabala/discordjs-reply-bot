@@ -2,7 +2,8 @@ import { Message } from 'discord.js';
 import { Reply } from '../entities';
 import { Context } from '../types';
 import * as embeds from '../messageEmbeds';
-export default class implements Command {
+import { Command } from '../classes';
+export default class extends Command {
 	name: string = 'add';
 	aliases: string[] = ['a'];
 	usage: string = '"[key]" "[value]" --include';

@@ -1,5 +1,5 @@
 import { CollectorFilter, Message, MessageEmbed } from 'discord.js';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 import { Context } from 'src/types';
 import { Reply } from '../entities';
 

@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 import { Context } from '../types';
 
 export default class extends Command {

@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 import { Reply } from '../entities';
 import { Context } from '../types';
 

@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 import { Context } from '../types';
 
 export default class extends Command {
@@ -7,7 +7,7 @@ export default class extends Command {
 	aliases: string[] = ['d'];
 	usage: string = '<prefix>';
 	options: string[] = [];
-	async execute({ user, guild }: Context, body: string, { channel }: Message): Promise<void> {
+	async execute({ user }: Context, _body: string, { channel }: Message): Promise<void> {
 		const embed = new MessageEmbed()
 			.setAuthor(user.username)
 			.setDescription(
