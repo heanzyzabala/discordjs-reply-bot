@@ -10,5 +10,6 @@ export default class extends Event {
 				type: 'PLAYING',
 			},
 		});
+		console.log('UP');
 	}
 }

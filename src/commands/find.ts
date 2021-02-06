@@ -8,29 +8,30 @@ export default class extends Command {
 	aliases: string[] = [];
 	usage: string = '';
 	options: string[] = [];
-	async execute({ guild }: Context, body: string, message: Message): Promise<void> {
-		const replies: Reply[] = await Reply.find({ guildId: guild.id });
+	async execute({ guild }: Context, body: string, message: Message): Promise<any> {
+		const replies = await Reply.find({ guildId: guild.id });
 		const reply = replies.find((r) => {
-			const { matchers, key } = r;
-			const matcherFns = matchers.map((m) => this.toMatcherFn(m));
-			const matchesAll = matcherFns.every((fn) => fn(key, body));
-			if (matchesAll) return true;
-			return false;
+			const { key, matcher, formatter } = r;
+			if (matcher === 'INCLUDES') {
+				if (formatter === 'IGNORE_CASE' && body.toUpperCase().includes(key.toUpperCase())) {
+					return r;
+				}
+				if (formatter === 'CASE_SENSITIVE' && body.includes(key)) {
+					return r;
+				}
+			}
+			if (matcher === 'PRECISE') {
+				if (formatter === 'IGNORE_CASE' && key.toUpperCase() === body.toUpperCase()) {
+					return r;
+				}
+				if (formatter === 'CASE_SENSITIVE' && key === body) {
+					return r;
+				}
+			}
+			return null;
 		});
 		if (reply) {
-			message.reply(reply.value);
-			return;
+			return message.reply(reply.value);
 		}
 	}
-
-	toMatcherFn = (matcher: string) => {
-		switch (matcher) {
-			case 'INCLUDES':
-				return (source: string, target: string) => source.includes(target);
-			case 'PRECISE':
-				return (source: string, target: string) => source === target;
-			default:
-				return () => true;
-		}
-	};
 }

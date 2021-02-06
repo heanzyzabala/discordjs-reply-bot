@@ -2,7 +2,7 @@ import { join } from 'path';
 import { readdir } from 'fs';
 import { Collection } from 'discord.js';
 import ReplyBotClient from 'src/replyBotClient';
-import { Command } from 'src/classes';
+import { Command } from '../classes';
 
 export default class CommandHandler extends Collection<string, Command> {
 	client: ReplyBotClient;

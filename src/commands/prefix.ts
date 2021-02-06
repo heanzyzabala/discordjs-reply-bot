@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Context } from '../types';
 import { Guild } from '../entities';
-import * as embeds from '../messageEmbeds';
+import * as embeds from '../embed';
 import { Command } from '../classes';
 
 export default class extends Command {
