@@ -1,10 +1,7 @@
 export interface Context {
 	id: string;
 	content: string;
-	user: {
-		id: string;
-		username: string;
-	};
+	user: User;
 	guild: {
 		id: number;
 		guildId: string;
@@ -18,4 +15,5 @@ export interface Context {
 export interface User {
 	id: string;
 	username: string;
+	avatarUrl: string;
 }

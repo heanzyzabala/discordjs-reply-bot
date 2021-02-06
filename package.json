@@ -9,13 +9,16 @@
     "type": "git",
     "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
   },
-  "author": "",
+  "author": "Heanzy Zabala",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/heanzyzabala/discord-reply-bot/issues"
   },
   "homepage": "https://github.com/heanzyzabala/discord-reply-bot#readme",
   "dependencies": {
+    "@hzabala/tsconfig": "^0.1.0",
+    "@types/bunyan": "^1.8.6",
+    "bunyan": "^1.8.15",
     "discord.js": "^12.5.0",
     "dotenv": "^8.2.0",
     "pg": "^8.5.1",
