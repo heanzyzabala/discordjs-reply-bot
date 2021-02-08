@@ -1,4 +1,4 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { Message } from 'discord.js';
 import { Command } from '../classes';
 import { Context } from 'src/types';
 import { Reply } from '../entities';

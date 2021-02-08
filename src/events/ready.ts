@@ -1,5 +1,7 @@
 import { Event } from '../classes';
+import { rootLogger } from '../common';
 
+const log = rootLogger().child({});
 export default class extends Event {
 	async execute() {
 		const guildSize = this.client.guilds.cache.size;
@@ -10,6 +12,6 @@ export default class extends Event {
 				type: 'PLAYING',
 			},
 		});
-		console.log('UP');
+		log.info({}, 'Bot Up')
 	}
 }
