@@ -11,7 +11,6 @@ export interface Context {
 		allowedRole: string;
 	};
 }
-
 export interface User {
 	id: string;
 	username: string;

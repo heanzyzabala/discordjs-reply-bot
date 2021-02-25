@@ -7,12 +7,13 @@ export default class extends Command {
 	aliases: string[] = ['d'];
 	usage: string = '<prefix>';
 	options: string[] = [];
-	async execute({ user }: Context, _body: string, { channel }: Message): Promise<void> {
+	async execute(context: Context, _body: string, { channel }: Message): Promise<any> {
+		const { user } = context;
 		const embed = new MessageEmbed()
 			.setAuthor(user.username)
 			.setDescription(
 				`[Donate here!](https://donatebot.io/checkout/801438637374963772?buyer=${user.id})`,
 			);
-		channel.send(embed);
+		return channel.send(embed);
 	}
 }

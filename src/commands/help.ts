@@ -7,7 +7,8 @@ export default class extends Command {
 	aliases: string[] = ['h'];
 	usage: string = '--help';
 	options: string[] = [];
-	async execute({ user, guild }: Context, _body: string, { channel }: Message): Promise<void> {
+	async execute(context: Context, _body: string, { channel }: Message): Promise<void> {
+		const { user, guild } = context
 		const { prefix } = guild;
 		const embed = new MessageEmbed()
 			.setColor('#4caf50')
@@ -19,7 +20,6 @@ export default class extends Command {
 				{ name: 'list', value: `\`${prefix}list\`` },
 				{ name: 'prefix', value: `\`${prefix}prefix [key]\`` },
 				{ name: 'role', value: `\`${prefix}role [key]\`` },
-				{ name: 'stats', value: `\`${prefix}stats\`` },
 			])
 			.addField(
 				'See instructions here:',

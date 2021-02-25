@@ -9,12 +9,14 @@ export default class extends Command {
 	aliases: string[] = ['p'];
 	usage: string = '<prefix>';
 	options: string[] = [];
-	async execute({ user, guild }: Context, body: string, { channel }: Message): Promise<void> {
+	async execute(context: Context, body: string, { channel }: Message): Promise<any> {
+		const { user, guild } = context;
 		const matches = body.match('^(.*)$');
 		if (!matches) {
-			channel.send(embeds.usage(user, this.usage));
-			return;
+			this.log.info({ ...context }, 'Invalid Usage');
+			return channel.send(embeds.usage(user, this.usage));
 		}
+		this.log.info({ ...context }, 'Setting Prefix');
 		const { guildId, maxReplies, maxLength, allowedRole, id } = guild;
 		await new Guild(guildId, matches[0], maxReplies, maxLength, allowedRole, id).save();
 		channel.send(embeds.success(user, `You set the prefix to '${matches[0]}'`));

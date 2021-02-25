@@ -8,7 +8,8 @@ export default class extends Command {
 	aliases: string[] = [];
 	usage: string = '';
 	options: string[] = [];
-	async execute({ guild }: Context, body: string, message: Message): Promise<any> {
+	async execute(context: Context, body: string, message: Message): Promise<any> {
+		const { guild } = context;
 		const replies = await Reply.find({ guildId: guild.id });
 		const reply = replies.find((r) => {
 			const { key, matcher, formatter } = r;
@@ -31,6 +32,7 @@ export default class extends Command {
 			return null;
 		});
 		if (reply) {
+			this.log.info({ ...context }, 'Replying to User')
 			return message.reply(reply.value);
 		}
 	}

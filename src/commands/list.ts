@@ -33,7 +33,6 @@ export default class extends Command {
 			})
 			.setAllowedUsers([user.id])
 			.build();
-
 	}
 
 	private generatePages(replies: Reply[]): string[] {

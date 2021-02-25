@@ -1,6 +1,9 @@
+import Logger from 'bunyan';
 import { Message } from 'discord.js';
 import { Context } from 'src/types';
 import ReplyBotClient from '../replyBotClient';
+
+import { rootLogger } from '../shared';
 
 export default class Command {
 	client: ReplyBotClient;
@@ -8,6 +11,7 @@ export default class Command {
 	aliases: string[];
 	usage: string;
 	options: string[];
+	log: Logger;
 
 	// prettier-ignore
 	constructor(client: ReplyBotClient, name: string, aliases: string[] = [], usage: string = '', options: string[] = []) {
@@ -16,6 +20,7 @@ export default class Command {
         this.aliases = aliases;
         this.usage = usage;
         this.options = options;
+		this.log = rootLogger.child({ command: this.name })
     }
 
 	execute(_context: Context, _body: string, _message: Message) {

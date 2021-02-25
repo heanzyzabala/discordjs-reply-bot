@@ -9,14 +9,16 @@ export default class extends Command {
 	aliases: string[] = ['r'];
 	usage: string = '<role>';
 	options: string[] = [];
-	async execute({ user, guild }: Context, body: string, { channel }: Message): Promise<void> {
+	async execute(context: Context, body: string, { channel }: Message): Promise<any> {
+		const { user, guild } = context
 		const matches = body.match('^(.*)$');
 		if (!matches) {
-			channel.send(embeds.usage(user, this.usage));
-			return;
+			this.log.info({ ...context }, 'Invalid Usage');
+			return channel.send(embeds.usage(user, this.usage));
 		}
+		this.log.info({ ...context }, 'Setting Role')
 		const { guildId, maxReplies, maxLength, prefix, id } = guild;
 		await new Guild(guildId, prefix, maxReplies, maxLength, matches[0], id).save();
-		channel.send(embeds.success(user, `You set the role to '${matches[0]}'`));
+		return channel.send(embeds.success(user, `You set the role to '${matches[0]}'`));
 	}
 }
