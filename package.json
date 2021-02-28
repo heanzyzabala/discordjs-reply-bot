@@ -1,35 +1,35 @@
 {
   "name": "discord-reply-bot",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "client.js",
+  "scripts": {
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/main.js\""
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
   },
-  "scripts": {
-    "test": "node_modules/mocha/bin/mocha test/** --exit"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Heanzy Zabala",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/heanzyzabala/discord-reply-bot/issues"
   },
   "homepage": "https://github.com/heanzyzabala/discord-reply-bot#readme",
   "dependencies": {
-    "discord.js": "^12.1.1",
+    "@hzabala/tsconfig": "^0.1.0",
+    "@types/bunyan": "^1.8.6",
+    "bunyan": "^1.8.15",
+    "discord.js": "^12.5.0",
     "dotenv": "^8.2.0",
-    "log4js": "^6.1.2",
-    "mongodb": "^3.5.5",
-    "uuidv4": "^6.0.7"
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.29"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "mocha": "^7.1.2",
-    "sinon": "^9.0.2"
+    "@types/uuid": "^8.3.0",
+    "@types/ws": "^7.4.0",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6",
+    "typescript": "^4.1.2"
   }
 }
