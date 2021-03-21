@@ -11,6 +11,7 @@ import {
 @Entity({ name: 'replies' })
 @Unique(['key', 'value', 'guildId'])
 export class Reply extends BaseEntity {
+	// prettier-ignore
 	constructor(key: string, value: string, matcher: string, formatter: string, guildId: number, id?: number) {
 		super();
 		if (id) this.id = id;

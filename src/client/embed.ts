@@ -1,5 +1,6 @@
 import { MessageEmbed } from 'discord.js';
-import { User } from './types';
+
+import { User } from '../types';
 
 export const usage = (user: User, message: string): MessageEmbed => {
 	return new MessageEmbed()

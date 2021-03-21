@@ -1,9 +1,10 @@
 import Logger from 'bunyan';
 import { Message } from 'discord.js';
-import { Context } from 'src/types';
+
 import ReplyBotClient from '../replyBotClient';
 
-import { rootLogger } from '../shared';
+import { Context } from '../../types';
+import { rootLogger } from '../../shared';
 
 export default class Command {
 	client: ReplyBotClient;

@@ -1,17 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, Unique } from 'typeorm';
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	BaseEntity,
+	Unique,
+	CreateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'guilds' })
 @Unique(['guildId'])
 export class Guild extends BaseEntity {
 	// prettier-ignore
-	constructor(guildId: string, prefix: string, maxReplies: number, maxLength: number, allowedRole: string, id?: number) {
+	constructor(guildId: string, prefix: string, maxReplies: number, maxLength: number, id?: number) {
     super();
+    if (id) this.id = id;
     this.guildId = guildId;
     this.prefix = prefix;
     this.maxReplies = maxReplies;
     this.maxLength = maxLength;
-    this.allowedRole = allowedRole;
-    if (id) this.id = id;
   }
 
 	@PrimaryGeneratedColumn()
@@ -29,6 +35,9 @@ export class Guild extends BaseEntity {
 	@Column()
 	maxLength: number;
 
-	@Column()
-	allowedRole: string;
+	@CreateDateColumn({ type: 'timestamp' })
+	createdAt: Date;
+
+	@CreateDateColumn({ type: 'timestamp' })
+	updatedAt: Date;
 }

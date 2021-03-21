@@ -7,7 +7,6 @@ export default class Event {
 	constructor(client: ReplyBotClient, name: string) {
 		this.client = client;
 		this.name = name;
-		throw new Error('sfsdf')
 	}
 
 	execute(..._args: any[]) {
