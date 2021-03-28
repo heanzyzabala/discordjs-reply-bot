@@ -43,7 +43,7 @@ export default class extends Command {
 			const { key, value, matcher, formatter } = replies[i];
 			const emoji = this.toEmoji(i);
 			let entry = '';
-			entry += '> ' + emoji + '\n';
+			entry += emoji + '\n';
 			entry += '```' + '\n';
 			entry += 'KEY: ' + key + '\n\n';
 			entry += 'VALUE: ' + value + '\n\n';

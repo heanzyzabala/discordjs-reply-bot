@@ -15,7 +15,7 @@ export default class extends Command {
 		const { user, guild } = context;
 		const matches = body.match(/^([a-zA-Z0-9!@#$&()\\-`.+,/\"]){1,4}$/);
 		if (!matches) {
-			this.log.info({ ...context }, 'Invalid Usage');
+			this.log.info({ ...context, reason: 'Invalid format' }, 'Invalid Usage');
 			return channel.send(embeds.usage(user, this.usage));
 		}
 		this.log.info({ ...context }, 'Setting Prefix');

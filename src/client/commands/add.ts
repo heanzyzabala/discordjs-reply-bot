@@ -17,14 +17,14 @@ export default class extends Command {
 		const matches = body.match(/^"([^"]+)" "([^"]+)"\s*(--includes|--ignoreCase)?\s*(--ignoreCase|--includes)?$/)
 
 		if (!matches || !matches[1].trim().length || !matches[2].trim().length) {
-			this.log.info({ ...context }, 'Invalid Usage');
+			this.log.info({ ...context, reason: 'Invalid format' }, 'Invalid Usage');
 			return channel.send(usage(user, this.usage));
 		}
 
 		const key = matches[1];
 		const value = matches[2];
 		if (key.length > guild.maxLength || value.length > guild.maxLength) {
-			this.log.info({ ...context, constraint: 'MAX_LENGTH_REACHED' }, 'Invalid Constraint');
+			this.log.info({ ...context, reason: 'Max length reached' }, 'Invalid Usage');
 			const title = 'Max length reached';
 			const description = `Key and Value should be less than ${guild.maxLength + 1} characters.`;
 			return channel.send(constraint(user, title, description));
@@ -32,7 +32,7 @@ export default class extends Command {
 
 		const replies = await Reply.find({ guildId: guild.id });
 		if (replies.length >= guild.maxReplies) {
-			this.log.info({ ...context, constraint: 'MAX_REPLIES_REACHED' }, 'Invalid Constraint');
+			this.log.info({ ...context, reason: 'Max replies reached' }, 'Invalid Usage');
 			const title = 'Max replies reached';
 			const description = `You can only add up to ${guild.maxReplies} replies.`;
 			return channel.send(constraint(user, title, description));

@@ -15,7 +15,7 @@ export default class extends Command {
 		const { user, guild } = context;
 		const matches = body.match(/^(\d{1,3})$/);
 		if (!matches) {
-			this.log.info({ ...context }, 'Invalid Usage');
+			this.log.info({ ...context, reason: 'Invalid format' }, 'Invalid Usage');
 			return channel.send(embed.usage(user, guild.prefix + this.usage));
 		}
 
@@ -23,8 +23,10 @@ export default class extends Command {
 		replies.sort((a, b) => a.id - b.id);
 		const reply = replies[parseInt(matches[0])];
 		if (!reply) {
-			this.log.info({ ...context }, 'Index Not Found');
-			return channel.send(embed.usage(user, guild.prefix + this.usage));
+			this.log.info({ ...context, reason: 'Index not found' }, 'Invalid Usage');
+			const title = 'Index not found'
+			const description = 'Unable to delete reply'
+			return channel.send(embed.constraint(user, title, description));
 		}
 
 		this.log.info({ ...context }, 'Removing Reply');
