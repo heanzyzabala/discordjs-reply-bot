@@ -9,7 +9,7 @@ import { Reply } from '../../entities';
 export default class extends Command {
 	name: string = 'list';
 	aliases: string[] = ['l'];
-	usage: string = '--list';
+	usage: string = '';
 	options: string[] = [];
 	async execute({ user, guild }: Context, _body: string, message: Message): Promise<any> {
 		const replies = await Reply.find({ guildId: guild.id });
