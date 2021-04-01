@@ -22,7 +22,7 @@ createConnections([
 		port: 5432,
 		database: 'discordjs-reply-bot-db',
 		username: 'postgres',
-		password: 'thepasswordofdoom',
+		password: 'dev',
 		entities: [Reply, Guild],
 		synchronize: true,
 		logging: false,
@@ -38,29 +38,28 @@ export const start = async () => {
 	const postgres = getConnection('postgres');
 	const spiels = await mongo.getMongoRepository(Spiel).find();
 
-	const results = new Map<string, number>();
+	let guildCount = 0;
+	let replyCount = 0;
 	const guildRepo = postgres.getRepository(Guild);
 	const replyRepo = postgres.getRepository(Reply);
 	for (let { guildId, mappings } of spiels) {
-		const guild = await guildRepo.findOne({ guildId });
+		const guild = await guildRepo.findOne({ discordGuildId: guildId });
 		if (!guild) {
 			const newGuild = new Guild(guildId, '--', 15, 350);
 			const savedGuild = await guildRepo.save(newGuild);
-			results.set(guildId, 0);
+			guildCount += 1
 
 			for (let { key, value, criteria } of mappings) {
 				const { match, format } = criteria;
 				const matchToSave = match === 'exact' ? 'PRECISE' : 'INCLUDES';
 				const formatToSave = format === 'ignoreCase' ? 'IGNORE_CASE' : 'CASE_SENSITIVE';
-				let replies = results.get(guildId) || 0;
-				results.set(guildId, replies++);
+				replyCount += 1
 				const newReply = await new Reply(key, value, matchToSave, formatToSave, savedGuild.id);
 				await replyRepo.save(newReply);
 			}
 		}
 	}
-	console.log(`Saved ${results.keys.length}/${spiels.length} guilds`);
-	const total = Array.from(results.values()).reduce((prev, cur) => cur + prev);
-	console.log(`Total replies saved: ${total}`);
+	console.log(`Saved ${guildCount}/${spiels.length} guilds`);
+	console.log(`Total replies saved: ${replyCount}`);
 	process.exit(0);
 };

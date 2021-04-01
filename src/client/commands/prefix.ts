@@ -19,8 +19,8 @@ export default class extends Command {
 			return channel.send(embeds.usage(user, this.usage));
 		}
 		this.log.info({ ...context }, 'Setting Prefix');
-		const { guildId, maxReplies, maxLength, id } = guild;
-		await new Guild(guildId, matches[0], maxReplies, maxLength, id).save();
+		const { discordGuildId, maxReplies, maxLength, id } = guild;
+		await new Guild(discordGuildId, matches[0], maxReplies, maxLength, id).save();
 		return channel.send(embeds.success(user, `You set the prefix to '${matches[0]}'`));
 	}
 }

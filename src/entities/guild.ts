@@ -8,13 +8,13 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'guilds' })
-@Unique(['guildId'])
+@Unique(['discordGuildId'])
 export class Guild extends BaseEntity {
 	// prettier-ignore
-	constructor(guildId: string, prefix: string, maxReplies: number, maxLength: number, id?: number) {
+	constructor(discordGuildId: string, prefix: string, maxReplies: number, maxLength: number, id?: number) {
     super();
     if (id) this.id = id;
-    this.guildId = guildId;
+    this.discordGuildId = discordGuildId;
     this.prefix = prefix;
     this.maxReplies = maxReplies;
     this.maxLength = maxLength;
@@ -23,21 +23,21 @@ export class Guild extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
-	guildId: string;
+	@Column({ name: 'discord_guild_id'})
+	discordGuildId: string;
 
 	@Column()
 	prefix: string;
 
-	@Column()
+	@Column({ name: 'max_replies' })
 	maxReplies: number;
 
-	@Column()
+	@Column({ name: 'max_length '})
 	maxLength: number;
 
-	@CreateDateColumn({ type: 'timestamp' })
+	@CreateDateColumn({ name: 'created_at', type: 'timestamp' })
 	createdAt: Date;
 
-	@CreateDateColumn({ type: 'timestamp' })
+	@CreateDateColumn({ name: 'updated_at', type: 'timestamp' })
 	updatedAt: Date;
 }

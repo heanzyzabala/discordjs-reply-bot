@@ -11,7 +11,6 @@ export class Spiel extends BaseEntity {
 	@Column()
 	mappings: Mapping[];
 }
-
 export interface Mapping {
 	key: string;
 	value: string;

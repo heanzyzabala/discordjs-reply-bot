@@ -37,12 +37,12 @@ export class Reply extends BaseEntity {
 	@Column()
 	formatter: string;
 
-	@Column()
+	@Column({ name: 'guild_id' })
 	guildId: number;
 
-	@CreateDateColumn({ type: 'timestamp' })
+	@CreateDateColumn({ name: 'created_at', type: 'timestamp' })
 	createdAt: Date;
 
-	@UpdateDateColumn({ type: 'timestamp' })
+	@UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
 	updatedAt: Date;
 }

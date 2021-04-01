@@ -3,25 +3,21 @@ import { createConnection } from 'typeorm';
 import { Reply, Guild } from './entities';
 
 const createLogger = (): Bunyan => {
+	console.log('creating logger')
 	const rootLogger = Bunyan.createLogger({
 		name: 'discordjs-reply-bot',
 		src: true,
 		streams: [
 			{
 				level: 'info',
-				path: `${process.env.LOG_ROOT_DIR}/${process.env.PROJECT_NAME}/info.log`,
+				stream: process.stdout
 			},
 			{
 				level: 'error',
-				path: `${process.env.LOG_ROOT_DIR}/${process.env.PROJECT_NAME}/error.log`,
+				stream: process.stderr
 			},
 		],
 	});
-	if (process.env.NODE_ENV === 'dev') {
-		rootLogger.addStream({ level: 'info', stream: process.stdout });
-		rootLogger.addStream({ level: 'error', stream: process.stderr });
-		rootLogger.debug({}, 'Adding local log stream');
-	}
 	return rootLogger;
 };
 

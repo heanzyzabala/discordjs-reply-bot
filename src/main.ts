@@ -1,19 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { getConnection } from 'typeorm';
 import { rootLogger } from './shared';
-
+import { getConnection } from 'typeorm';
 import Client from './client/replyBotClient';
 
 const log = rootLogger.child({});
 const client = new Client();
-
-// console.log('logging in');
-// console.log(process.env.TOKEN);
-// const client = new Client();
-// client.on('ready', () => console.log('hmm'));
-// (async () => await client.login(process.env.TOKEN))();
 
 process.on('SIGTERM', () => {
 	log.info({}, 'Stopped by SIGTERM');

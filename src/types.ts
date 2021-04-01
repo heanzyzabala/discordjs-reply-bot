@@ -12,7 +12,7 @@ export interface User {
 
 export interface Guild {
 	id: number;
-	guildId: string;
+	discordGuildId: string;
 	prefix: string;
 	maxReplies: number;
 	maxLength: number;

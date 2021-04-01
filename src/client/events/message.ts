@@ -15,7 +15,7 @@ export default class extends Event {
 		if (message.author.bot) return;
 		if (!message.guild) return;
 
-		let guild = await Guild.findOne({ guildId: message.guild.id });
+		let guild = await Guild.findOne({ discordGuildId: message.guild.id });
 		let context;
 		if (!guild) {
 			guild = await new Guild(message.guild.id, '--', 15, 350).save();
@@ -58,7 +58,7 @@ export default class extends Event {
 			},
 			guild: {
 				id: guild.id,
-				guildId: guild.guildId,
+				discordGuildId: guild.discordGuildId,
 				prefix: guild.prefix,
 				maxReplies: guild.maxReplies,
 				maxLength: guild.maxLength,
