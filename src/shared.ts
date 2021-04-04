@@ -3,7 +3,6 @@ import { createConnection } from 'typeorm';
 import { Reply, Guild } from './entities';
 
 const createLogger = (): Bunyan => {
-	console.log('creating logger')
 	const rootLogger = Bunyan.createLogger({
 		name: 'discordjs-reply-bot',
 		src: true,
