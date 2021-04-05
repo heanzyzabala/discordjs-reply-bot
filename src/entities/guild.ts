@@ -32,7 +32,7 @@ export class Guild extends BaseEntity {
 	@Column({ name: 'max_replies' })
 	maxReplies: number;
 
-	@Column({ name: 'max_length '})
+	@Column({ name: 'max_length'})
 	maxLength: number;
 
 	@CreateDateColumn({ name: 'created_at', type: 'timestamp' })
