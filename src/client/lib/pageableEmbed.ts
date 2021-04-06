@@ -35,7 +35,7 @@ export default class PageableEmbed<T> extends MessageEmbed {
 		} else {
 			this.setDescription(this.pages[0]);
 		}
-		this.setFooter(`Pages: ${this.currentPage + 1}/${this.pages.length}`);
+		this.updateFooter(this.currentPage + 1, this.pages.length)
 		this.message = await this.message.channel.send(this);
 
 		const nextFilter: CollectorFilter = (reaction, u) =>
@@ -51,7 +51,7 @@ export default class PageableEmbed<T> extends MessageEmbed {
 			await this.message.react('⬅️');
 			this.message.react('➡️');
 
-			this.setFooter(`Pages: ${this.currentPage + 1}/${this.pages.length}`);
+			this.updateFooter(this.currentPage + 1, this.pages.length)
 			if (this.onNext) {
 				const res = this.onNext(this.pages, this.currentPage, this);
 				if (res) {
@@ -68,7 +68,7 @@ export default class PageableEmbed<T> extends MessageEmbed {
 			await this.message.react('⬅️');
 			this.message.react('➡️');
 
-			this.setFooter(`Pages: ${this.currentPage + 1}/${this.pages.length}`);
+			this.updateFooter(this.currentPage + 1, this.pages.length)
 			if (this.onPrevious) {
 				const res = this.onPrevious(this.pages, this.currentPage, this);
 				if (res) {
@@ -81,6 +81,16 @@ export default class PageableEmbed<T> extends MessageEmbed {
 		await this.message.react('⬅️');
 		this.message.react('➡️');
 		return this;
+	}
+
+	updateFooter(current: number, total: number) {
+		this.setFooter(
+			`Pages: ${current}/${total}` +
+			'\n\nNotice:' +
+			'\nYou have to untoggle and toggle the buttons to navigate the pages.' +
+			'\nPlease re-add the bot to your server to update the permissions to fix it:' +
+			'\n\nhttps://discord.com/oauth2/authorize?client_id=693108033601011762&scope=bot&permissions=67529792'
+		);		
 	}
 
 	setPages(pages: T[]) {
