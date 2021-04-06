@@ -6,7 +6,11 @@ import {
 	Unique,
 	UpdateDateColumn,
 	CreateDateColumn,
+	ManyToOne,
+	JoinColumn,
 } from 'typeorm';
+
+import { Guild } from './guild';
 
 @Entity({ name: 'replies' })
 @Unique(['key', 'value', 'guildId'])
@@ -36,6 +40,10 @@ export class Reply extends BaseEntity {
 
 	@Column()
 	formatter: string;
+
+	@ManyToOne(type => Guild, { onDelete: 'RESTRICT' })
+	@JoinColumn()
+	guild: Guild;
 
 	@Column({ name: 'guild_id' })
 	guildId: number;

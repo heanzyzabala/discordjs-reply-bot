@@ -10,7 +10,7 @@ const client = new Client();
 
 process.on('SIGTERM', () => {
 	log.info({}, 'Stopped by SIGTERM');
-	// client.destroy();
+	client.destroy();
 	getConnection().close();
 	process.exit(0);
 });

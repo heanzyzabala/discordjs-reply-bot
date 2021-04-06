@@ -34,6 +34,15 @@ export default class extends Event {
 					},
 				} as PresenceData;
 			},
+			() => {
+				return {
+					status: 'online',
+					activity: {
+						name: '--help for help',
+						type: 'PLAYING',
+					},
+				} as PresenceData;
+			},			
 		];
 		let index = 0;
 		setInterval(async () => {
