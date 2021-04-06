@@ -18,12 +18,12 @@ export default class extends Command {
 			.setTitle('Available commands:')
 			.addFields([
 				{ name: 'add', value: `\`${prefix}add <"key"> <"value"> --ignoreCase? --includes\`` },
+				{ name: 'remove', value: `\`${prefix}remove <index>\`` },
+				{ name: 'list', value: `\`${prefix}list\`` },
 				{ name: 'donate', value: `\`${prefix}donate\`` },
 				{ name: 'help', value: `\`${prefix}help\`` },
-				{ name: 'list', value: `\`${prefix}list\`` },
-				{ name: 'prefix', value: `\`${prefix}prefix <key>\`` },
-				{ name: 'remove', value: `\`${prefix}remove <index>\`` },
 			])
+			.setFooter('... more commands soon')
 			.setDescription('You can find comprehensive guide here: https://top.gg/bot/693108033601011762')
 		channel.send(embed);
 	}
