@@ -38,11 +38,20 @@ export default class extends Event {
 				return {
 					status: 'online',
 					activity: {
-						name: '--help for help',
+						name: '--help',
 						type: 'PLAYING',
 					},
 				} as PresenceData;
-			},			
+			},
+			() => {
+				return {
+					status: 'online',
+					activity: {
+						name: '--donate',
+						type: 'PLAYING',
+					},
+				} as PresenceData;
+			},						
 		];
 		let index = 0;
 		setInterval(async () => {
