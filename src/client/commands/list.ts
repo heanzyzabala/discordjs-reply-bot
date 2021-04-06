@@ -1,37 +1,38 @@
 import { Message } from 'discord.js';
+
 import { Command } from '../classes';
-import { Context } from 'src/types';
-import { Reply } from '../entities';
 import PageableEmbed from '../lib/pageableEmbed';
+
+import { Context } from '../../types';
+import { Reply } from '../../entities';
 
 export default class extends Command {
 	name: string = 'list';
 	aliases: string[] = ['l'];
-	usage: string = '--list';
+	usage: string = '';
 	options: string[] = [];
-	async execute({ user, guild }: Context, _body: string, message: Message): Promise<void> {
+	async execute({ user, guild }: Context, _body: string, message: Message): Promise<any> {
 		const replies = await Reply.find({ guildId: guild.id });
 		replies.sort((a, b) => a.id - b.id);
 		const pages = this.generatePages(replies);
-		// prettier-ignore
-		await new PageableEmbed<string>(message)
+		return await new PageableEmbed<string>(message)
 			.setAuthor(user.username, user.avatarUrl)
 			.setTitle('Replies: \u200b')
 			.setColor('#4caf50')
 			.setPages(pages)
 			.setOnEmpty((embed) => {
-				embed.setDescription('There are none added yet.')
+				embed.setDescription('There are none added yet.');
 			})
 			.setOnFirstPage((pages, embed) => {
 				embed.setDescription(pages[0]);
 			})
 			.setOnNext((pages, nextPage, embed) => {
-				embed.setDescription(pages[nextPage])
+				embed.setDescription(pages[nextPage]);
 			})
 			.setOnPrevious((pages, previousPage, embed) => {
-				embed.setDescription(pages[previousPage])
+				embed.setDescription(pages[previousPage]);
 			})
-			.setAllowedUsers([user.id])
+			.setAllowedUsers([user.userId])
 			.build();
 	}
 
@@ -42,7 +43,7 @@ export default class extends Command {
 			const { key, value, matcher, formatter } = replies[i];
 			const emoji = this.toEmoji(i);
 			let entry = '';
-			entry += '> ' + emoji + '\n';
+			entry += emoji + '\n';
 			entry += '```' + '\n';
 			entry += 'KEY: ' + key + '\n\n';
 			entry += 'VALUE: ' + value + '\n\n';

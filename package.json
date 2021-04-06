@@ -1,29 +1,31 @@
 {
-  "name": "discord-reply-bot",
+  "name": "discordjs-reply-bot",
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/main.js\""
+    "dev": "NODE_ENV=dev concurrently \"tsc -w\" \"nodemon dist/main.js\" | bunyan -o short",
+    "compile": "tsc -p .",
+    "migrate": "NODE_ENV=dev concurrently \"tsc -w\" \"nodemon dist/migrations/index.js\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heanzyzabala/discord-reply-bot.git"
+    "url": "git+https://github.com/heanzyzabala/discordjs-reply-bot.git"
   },
   "author": "Heanzy Zabala",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/heanzyzabala/discord-reply-bot/issues"
+    "url": "https://github.com/heanzyzabala/discordjs-reply-bot/issues"
   },
-  "homepage": "https://github.com/heanzyzabala/discord-reply-bot#readme",
+  "homepage": "https://github.com/heanzyzabala/discordjs-reply-bot#readme",
   "dependencies": {
     "@hzabala/tsconfig": "^0.1.0",
     "@types/bunyan": "^1.8.6",
-    "bunyan": "^1.8.15",
     "discord.js": "^12.5.0",
     "dotenv": "^8.2.0",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.29"
+    "typeorm": "^0.2.29",
+    "bunyan": "^1.8.15"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.0",

@@ -1,12 +1,13 @@
 import { Message } from 'discord.js';
 
-import { Guild } from '../entities';
-import { Command, Event } from '../classes';
-import { rootLogger } from '../shared';
-import { Context } from '../types';
 import Find from '../commands/find';
+import { Command, Event } from '../classes';
 
-const log = rootLogger.child({})
+import { Guild } from '../../entities';
+import { rootLogger } from '../../shared';
+import { Context } from '../../types';
+
+const log = rootLogger.child({});
 export default class extends Event {
 	find: Command = new Find(this.client, '');
 
@@ -14,10 +15,10 @@ export default class extends Event {
 		if (message.author.bot) return;
 		if (!message.guild) return;
 
-		let guild = await Guild.findOne({ guildId: message.guild.id });
+		let guild = await Guild.findOne({ discordGuildId: message.guild.id });
 		let context;
 		if (!guild) {
-			guild = await new Guild(message.guild.id, '--', 15, 350, 'ALL').save();
+			guild = await new Guild(message.guild.id, '--', 15, 350).save();
 			context = this.createContext(message, guild);
 			log.info({ ...context }, 'Added Guild');
 		}
@@ -27,13 +28,14 @@ export default class extends Event {
 		const { content } = message;
 		if (content.startsWith(prefix)) {
 			const argvs = content.slice(prefix.length).split(' ');
-			const command = this.getCommand(argvs.shift());
+			const cmdString = argvs.shift();
+			const command = this.getCommand(cmdString);
 			if (command) {
 				log.info({ ...context, command: command.name }, 'Executing Command');
-				const body = content.slice(prefix.length + command.name.length).trim();
+				const body = content.slice(prefix.length + cmdString!.length).trim();
 				return await command.execute(context, body, message);
 			}
-			log.info({ ...context }, 'Invalid Command');
+			log.info({ ...context, command: cmdString }, 'Invalid Command');
 			return;
 		}
 		await this.find.execute(context, content, message);
@@ -47,20 +49,19 @@ export default class extends Event {
 
 	createContext = (message: Message, guild: Guild) => {
 		const context: Context = {
-			id: message.id,
+			messageId: message.id,
 			content: message.content,
 			user: {
-				id: message.author.id,
+				userId: message.author.id,
 				username: message.author.tag,
 				avatarUrl: message.author.displayAvatarURL(),
 			},
 			guild: {
 				id: guild.id,
-				guildId: guild.guildId,
+				discordGuildId: guild.discordGuildId,
 				prefix: guild.prefix,
 				maxReplies: guild.maxReplies,
 				maxLength: guild.maxLength,
-				allowedRole: guild.allowedRole,
 			},
 		};
 		return context;

@@ -6,11 +6,16 @@ import {
 	Unique,
 	UpdateDateColumn,
 	CreateDateColumn,
+	ManyToOne,
+	JoinColumn,
 } from 'typeorm';
+
+import { Guild } from './guild';
 
 @Entity({ name: 'replies' })
 @Unique(['key', 'value', 'guildId'])
 export class Reply extends BaseEntity {
+	// prettier-ignore
 	constructor(key: string, value: string, matcher: string, formatter: string, guildId: number, id?: number) {
 		super();
 		if (id) this.id = id;
@@ -36,12 +41,16 @@ export class Reply extends BaseEntity {
 	@Column()
 	formatter: string;
 
-	@Column()
+	@ManyToOne(type => Guild, { onDelete: 'RESTRICT' })
+	@JoinColumn()
+	guild: Guild;
+
+	@Column({ name: 'guild_id' })
 	guildId: number;
 
-	@CreateDateColumn({ type: 'timestamp' })
+	@CreateDateColumn({ name: 'created_at', type: 'timestamp' })
 	createdAt: Date;
 
-	@UpdateDateColumn({ type: 'timestamp' })
+	@UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
 	updatedAt: Date;
 }

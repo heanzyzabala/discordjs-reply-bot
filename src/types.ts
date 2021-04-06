@@ -1,18 +1,19 @@
 export interface Context {
-	id: string;
+	messageId: string;
 	content: string;
 	user: User;
-	guild: {
-		id: number;
-		guildId: string;
-		prefix: string;
-		maxReplies: number;
-		maxLength: number;
-		allowedRole: string;
-	};
+	guild: Guild;
 }
 export interface User {
-	id: string;
+	userId: string;
 	username: string;
 	avatarUrl: string;
+}
+
+export interface Guild {
+	id: number;
+	discordGuildId: string;
+	prefix: string;
+	maxReplies: number;
+	maxLength: number;
 }

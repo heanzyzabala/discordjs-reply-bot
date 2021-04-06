@@ -1,11 +1,13 @@
 import { Message } from 'discord.js';
+
 import { Command } from '../classes';
-import { Reply } from '../entities';
-import { Context } from '../types';
+
+import { Context } from '../../types';
+import { Reply } from '../../entities';
 
 export default class extends Command {
 	name: string = '';
-	aliases: string[] = [];
+	aliases: string[] = [''];
 	usage: string = '';
 	options: string[] = [];
 	async execute(context: Context, body: string, message: Message): Promise<any> {
@@ -32,7 +34,7 @@ export default class extends Command {
 			return null;
 		});
 		if (reply) {
-			this.log.info({ ...context }, 'Replying to User')
+			this.log.info({ ...context }, 'Replying to User');
 			return message.reply(reply.value);
 		}
 	}
