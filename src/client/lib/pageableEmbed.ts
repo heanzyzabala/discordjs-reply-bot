@@ -86,8 +86,8 @@ export default class PageableEmbed<T> extends MessageEmbed {
 	updateFooter(current: number, total: number) {
 		this.setFooter(
 			`Pages: ${current}/${total}` +
-			'\n\nNotice:' +
-			'\nYou have to untoggle and toggle the buttons to navigate the pages.' +
+			'\n\nNotice for users who have this bot before April 6, 2021:' +
+			'\n\nYou have to untoggle and toggle the buttons to navigate the pages.' +
 			'\nPlease re-add the bot to your server to update the permissions to fix it:' +
 			'\n\nhttps://discord.com/oauth2/authorize?client_id=693108033601011762&scope=bot&permissions=67529792'
 		);		
